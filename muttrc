@@ -1,0 +1,146 @@
+#load account settings etc.
+source ~/.mutt/accountrc
+
+#load gpg settings
+source ~/.mutt/gpg.rc
+
+#load aliases
+source ~/.mutt/aliases
+
+#bindings and misc macros
+bind editor <space> noop
+bind pager \Cj next-line
+bind pager \Ck previous-line
+macro index gg "<home>"
+macro index G "<end>"
+
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index go "<change-folder>=[Google Mail]/Sent Mail<enter>" "Go to outbox (sent mails)"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "Launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "Add the sender address to abook"
+
+#View html with w3m (see .mailcap)
+auto_view text/html
+
+# but first, try to find a sane attachment; html last.
+alternative_order text/plain text/enriched text/html
+
+#color stuff
+color hdrdefault red default
+color error brightred default
+color tilde magenta default
+color markers brightcyan default
+color attachment brightmagenta default
+color header brightred default ^(From|Subject):
+color underline brightgreen default
+color tree magenta default
+color index brightcyan default ~N #new messages
+color index yellow default ~T #tagged messages
+color index magenta default ~v #messages in collapsed threads
+color index white default ~l #messages from mailing lists
+color index green default ~k #messages with pgp content
+color index brightred default ~D #messages cued for deletion
+color index brightblack default ~E #expired messages
+color indicator brightdefault blue
+color status default blue
+color message brightgreen default
+color search default red
+
+color body brightcyan default "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+" #mail
+color body brightcyan default "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*" #url
+color body brightcyan default "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+" #mailto
+mono body bold "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*" #url
+mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+" #mail
+color signature green default
+
+# Coloring quoted text - coloring the first 7 levels:
+color quoted yellow default
+color quoted1 green default
+color quoted2 red default
+color quoted3 cyan default
+color quoted4 yellow default
+color quoted5 green default
+color quoted6 red default
+color quoted7 cyan default
+
+#TOFU coloring
+color body	brightcyan	default	"^\\[---.*"
+color body	yellow		default	"^#v[-+]"
+
+folder-hook . "push <collapse-all>" #collapse all threads when opening a folder
+
+set query_command = "abook --mutt-query '%s'"
+
+#TOFU
+set display_filter='t-prot -aelmtS -c --bigq --pgp-move-vrf --reply -Mmutt'
+
+#Messages should be marked as new until I read them
+set mark_old=no
+
+#split to see index and pager
+set pager_index_lines=15
+
+#muttprint
+set print_command="muttprint %s"
+
+#Usually, I don't postpone anything, so
+set postpone=ask-no
+
+#thread stuff
+set sort = 'threads'
+set collapse_unread=yes
+set uncollapse_jump=yes
+#index format
+#default :"%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
+#this one also shows the number of messages in a collapsed thread
+set index_format="%4C %Z %{%b %d %H:%M} %-20.20L %?M?(#%03M)&(%4l)? %s"
+
+#setting up aliases and abook support
+set alias_file=~/.mutt/aliases
+set sort_alias=alias
+set reverse_alias=yes
+
+set timeout=60
+set mail_check=15
+set imap_keepalive = 300
+
+#important files are in ~/.mutt
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+
+#Stop asking to "move read messages to mbox"!
+set move = no 
+
+#enable terminal bell -> for use with vbell and tmux
+set beep_new
+
+#reply faster!
+set fast_reply
+
+#navigate faster!
+set sleep_time = 0
+
+#pager
+set pager_stop = yes
+set smart_wrap = yes
+
+#Sort received messages by last date
+set sort_aux = 'last-date-received'
+
+set date_format="!%a, %b %d, %Y at %H:%M:%S %Z"
+
+#Don't ask to include message in a reply
+set include = yes
+
+#Don't want to receive my own messages
+set metoo = no
+
+#Enable strict threads
+set strict_threads = yes
+
+#Set locale
+set locale="en_US.UTF-8"
+set charset="utf-8"
+
+set send_charset="utf-8:iso-8859-1"

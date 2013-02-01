@@ -1,0 +1,6 @@
+ansi=1
+ssl=1
+verify=1
+readline=1
+urlopen=firefox -new-tab %U &
+vcheck=1

@@ -1,0 +1,363 @@
+# Posted at http://dl.dropbox.com/u/18371907/asoundrc
+
+# Show programs currently opening ALSA:
+# fuser -fv /dev/snd/* /dev/dsp*
+
+# Show opened settings:
+# cat /proc/asound/card0/pcm0p/sub0/hw_params
+
+# Show codec:
+# cat /proc/asound/card0/codec#0 | grep Codec
+# Codec: Realtek ALC889
+
+# Maybe OSS can be compatible with dmix (aoss, alsa-oss):
+# https://bbs.archlinux.org/viewtopic.php?pid=981179#p981179
+# http://alsa.opensrc.org/Dmix
+# http://forums.gentoo.org/viewtopic-t-856668.html
+# http://www.knoppix.net/forum/threads/25372-HowTo-ALSA-Dmix-OSS
+
+# dmix - plug:dmix supports 1-8 channels, and does use dmix!
+# Whereas surround51 doesn't use dmix
+# http://bbs.archlinux.org/viewtopic.php?pid=745946#p745946
+
+
+# cat /proc/asound/card0/pcm0p/sub0/hw_params
+
+defaults.pcm.rate_converter "samplerate_medium"
+
+# Posted at http://bbs.archlinux.org/viewtopic.php?id=95582
+# Is a dmix that actually works!
+# To prove it, run these commands simultaneously, starting with the first one:
+#     speaker-test -c 2 -D default
+#     speaker-test -c 6 -D surround51 -t wav
+pcm.dmixed {
+	type asym
+	playback.pcm {
+		# See plugin:dmix at http://www.alsa-project.org/alsa-doc/alsa-lib/pcm_plugins.html
+		type dmix
+		ipc_key 5678293
+		ipc_perm 0660
+		ipc_gid audio
+		# Don't put the rate here! Otherwise it resets the rate & channels set below, as shown by:  cat /proc/asound/card0/pcm0p/sub0/hw_params
+		slave {
+			# 2 for stereo, 6 for surround51
+			channels 6
+			pcm {
+				# mplayer chooses S32_LE, but others usually S16_LE
+				#format S32_LE
+				format S16_LE
+
+				# 44100 or 48000
+				#rate 44100
+				rate 48000
+
+				type hw
+				card 0
+				device 0
+				subdevice 0
+			}
+
+			period_size 1024
+			buffer_size 8192
+		}
+
+		bindings {
+			0 0
+			1 1
+			2 2
+			3 3
+			4 4
+			5 5
+		}
+	}
+	capture.pcm "hw:0"
+}
+
+pcm.!default {
+	type asym
+
+	playback.pcm "softvol"
+	capture.pcm "hw:0"
+	#slave.pcm "dmixed"
+}
+
+pcm.softvol {
+    type            softvol
+    slave {
+        pcm         "upmix_20to51"
+    }
+    control {
+        name        "Software"
+        card        0
+    }
+}
+
+pcm.!surround20 {
+	type plug
+	slave.pcm "dmixed"
+}
+
+pcm.!surround40 {
+	type plug
+	slave.pcm "dmixed"
+}
+
+pcm.!surround51 {
+	type plug
+	slave.pcm "dmixed"
+}
+
+
+pcm.ch51dup {
+	slave.pcm "dmixed"
+	slave.channels 6
+	type route
+
+	# Front and rear
+	ttable.0.0 0.5
+	ttable.1.1 0.5
+	ttable.2.2 0.5
+	ttable.3.3 0.5
+
+	# Center and LFE
+	ttable.4.4 1
+	ttable.5.5 1
+
+	# Front left/right to center
+	ttable.0.4 0.5
+	ttable.1.4 0.5
+
+	# Front left/right to rear
+	ttable.0.2 0.5
+	ttable.1.3 0.5
+}
+
+# http://alsa.opensrc.org/SurroundSound
+# http://alsa.opensrc.org/Low-pass_filter_for_subwoofer_channel_%28HOWTO%29
+# Lunar:  lin ladspa tap-plugins swh-plugins cmt-plugins libsamplerate
+# Fedora:  yum install ladspa ladspa-blop-plugins ladspa-caps-plugins ladspa-cmt-plugins ladspa-swh-plugins ladspa-tap-plugins libsamplerate
+# Arch Linux:  pacman -S ladspa blop swh-plugins libsamplerate tap-plugins cmt
+# For id 1672 - 4 Pole Low-Pass Filter with Resonance (FCRCIA) (1672/lp4pole_fcrcia_oa), install blop-plugins
+# speaker-test -D upmix_20to51 -c 2 -t wav
+# Debugging:  speaker-test -D plug:lowpass_21to21 -c 3 -t wav
+# listplugins
+# analyseplugin cmt
+# http://plugin.org.uk/ladspa-swh/docs/ladspa-swh.html
+# http://forums.gentoo.org/viewtopic-p-4528619.html#4528619
+pcm.lowpass_21to21 {
+	type ladspa
+	slave.pcm upmix_21to51
+	# Set the path to ladspa, to fix this error:
+	# Playback open error: -2,No such file or directory
+	path "/usr/lib/ladspa"
+	channels 3
+	plugins {
+		0 {
+			id 1098  # Identity (Audio) (1098/identity_audio)
+			policy duplicate
+			input.bindings.0 "Input";
+			output.bindings.0 "Output";
+		}
+
+		# 1 {
+		# 	id 1052  # High-pass filter
+		# 	policy none
+		# 	input.bindings.0 "Input";
+		# 	output.bindings.0 "Output";
+		# 	input {
+		# 		controls [ 120 ]
+		# 	}
+		# }
+
+		# 2 {
+		# 	id 1052  # High-pass filter
+		# 	policy none
+		# 	input.bindings.1 "Input";
+		# 	output.bindings.1 "Output";
+		# 	input {
+		# 		controls [ 120 ]
+		# 	}
+		# }
+
+		# 3 {
+		# 	id 1051  # Low-pass filter.
+		# 	policy none
+		# 	input.bindings.2 "Input";
+		# 	output.bindings.2 "Output";
+		# 	input {
+		# 		controls [ 120 ]
+		# 	}
+		# }
+
+		# From http://alsa.opensrc.org/Low-pass_filter_for_subwoofer_channel_%28HOWTO%29
+		# Can be used instead of 1-3 above.
+		1 {
+			id 1672 # 4 Pole Low-Pass Filter with Resonance (FCRCIA) (1672/lp4pole_fcrcia_oa)
+			policy none
+			input.bindings.2 "Input";
+			output.bindings.2 "Output";
+			input {
+				controls [ 120 2 ]
+			}
+		}
+	}
+}
+
+
+# speaker-test -D upmix_20to51 -c 2 -t wav
+# In audacious:  upmix_20to51
+pcm.upmix_20to51 {
+	type plug
+	slave.pcm "lowpass_21to21"
+	slave.channels 3
+	ttable {
+		0.0     1       # left channel
+		1.1     1       # right channel
+		0.2     0.5     # mix left and right ...
+		1.2     0.5     # ... channel for subwoofer
+	}
+
+    hint {
+        show on
+        description "20to51"
+    }
+}
+
+
+pcm.upmix_20to51_resample {
+	type rate
+	slave {
+		pcm upmix_20to51
+		#format S32_LE
+		# Audigy4 upmixes to 48000 itself, and seems to use low-quality linear interpolation
+		# This is for movies, which are usually 48000
+		rate 48000
+	}
+	# Choices: samplerate_best samplerate_medium samplerate samplerate_order samplerate_linear
+	# 8% CPU with samplerate_medium - good choice
+	converter "samplerate_medium"
+	#converter "samplerate_linear"
+    hint {
+        show on
+        description "20to51_resample"
+    }
+}
+
+# Debugging:  speaker-test -D upmix_21to51 -c 3 -t wav
+pcm.upmix_21to51 {
+	type plug
+
+	slave.pcm "dmixed"
+
+	slave.channels 6
+	ttable {
+		0.0     1       # front left
+		1.1     1       # front right
+		0.2     1       # rear left
+		1.3     1       # rear right
+
+		# Front left/right to center.
+		# Imbalanced because is to the left of the monitor!
+		# Would normally be 0.5 each.
+		0.4     0.5
+		1.4     0.5
+
+		# Subwoofer, more powerful to compensate for bass-removal from other speakers.
+		2.5     2
+    }
+}
+
+# From https://bbs.archlinux.org/viewtopic.php?id=99185
+pcm.movie {
+	type plug
+	slave.pcm "ladcomp_compressor";
+    hint {
+        show on
+        description "Movie Volume"
+    }
+}
+
+pcm.ladcomp_compressor {
+	type ladspa
+	slave.pcm "ladcomp_limiter";
+	path "/usr/lib/ladspa";
+	plugins [
+		{
+			label dysonCompress
+			input {
+				# peak limit, release time, fast ratio, ratio
+				controls [0 1 0.5 0.99]
+			}
+		}
+	]
+}
+
+pcm.ladcomp_limiter {
+	type ladspa
+	#slave.pcm "default"
+	slave.pcm "plug:movie8930"
+	path "/usr/lib/ladspa"
+	plugins [
+		{
+			label fastLookaheadLimiter
+			input {
+				# InputGain(Db) -20 -> +20 ; Limit (db) -20 -> 0 ; Release time (s) 0.01 -> 2
+				# also possible... 20 0 0.8
+				# If movie is too quiet, increase the first number.
+				controls [ 5 0 0.8  ]
+			}
+		}
+	]
+}
+
+pcm.movie8930 {
+	type route
+	#slave.pcm "dmixed"
+	# No need to use dmix
+	slave.pcm "hw:0"
+	slave.channels 6
+
+	ttable.0.0 1.0
+	ttable.1.1 1.0
+	ttable.2.2 1.0
+	ttable.3.3 1.0
+	ttable.4.4 1.0
+	ttable.0.5 0.6
+	ttable.1.5 0.6
+	ttable.4.5 0.6
+	ttable.5.5 0.8
+}
+
+
+pcm.downmix_51to20 {
+	# From http://www.halfgaar.net/surround-sound-in-linux
+	type route
+	#slave.pcm "default"
+	slave.pcm "dmixed"
+
+	# Front and rear, at 33% of original signal strength
+	ttable.0.0 0.33
+	ttable.1.1 0.33
+	ttable.2.0 0.33
+	ttable.3.1 0.33
+
+	# Center channel routing (routed to front-left and front-right),
+	# 6dB gaindrop (gain half of main channels) per channel
+	ttable.4.0 0.16
+	ttable.4.1 0.16
+
+	# LFE channel routing (routed to front-left and front-right),
+	# 6dB gaindrop (gain half of main channels) per channel
+	ttable.5.0 0.16
+	ttable.5.1 0.16
+}
+
+pcm.downmix_51to20_no_lfe {
+	# From http://www.rpgameplace.de/blog/index.php?/archives/25-Virtual-Surround-for-stereo-headphones-with-ALSA.html
+	# BUG: LFE is silent (use ttable method instead):
+	# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503839
+	# https://bugtrack.alsa-project.org/alsa-bug/view.php?id=4632
+	type vdownmix
+	slave.pcm "plug:dmixed"
+	#slave.pcm "default"
+}

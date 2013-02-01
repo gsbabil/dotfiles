@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+	for f in /etc/X11/xinit/xinitrc.d/*; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# load gb keymap
+setxkbmap gb_de
+
+# load key bindings
+xmodmap .Xmodmap
+
+# load .Xresources
+xrdb -merge .Xresources
+
+# load unclutter
+# unclutter &
+
+# screen powersave
+xset +dpms
+xset dpms 0 0 120
+
+# start syndaemon. ignore taps and scrolling when typing
+syndaemon -i 3 -t -k -d
+
+# activate numpad
+numlockx &
+
+# load local fonts
+xset +fp "/usr/share/fonts/local"
+xset fp rehash
+
+# start mpd and urxvtd
+mpd
+mpdcron
+urxvtd -q -f -o
+
+# monitor devices
+devmon --no-mount --exec-on-drive "devnotify %f %l" &> /tmp/devmon.log &
+
+exec awesome

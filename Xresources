@@ -1,0 +1,34 @@
+! Urxvt
+URxvt.buffered: true
+URxvt.cursorColor: #D0CFD0
+URxvt.cursorBlink: true
+URxvt*urgentOnBell: true
+URxvt.font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
+URxvt.boldFont:-*-terminus-bold-*-*-*-16-*-*-*-*-*-iso8859-*
+URxvt*scrollBar: false
+URxvt.termName: rxvt-256color
+URxvt.depth: 32
+URxvt.background: [85]#121112
+
+! set up extensions
+URxvt.perl-ext: default,url-select,clipboard,keyboard-select
+
+! url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: firefox
+
+! clipboard
+URxvt.keysym.C-y: perl:clipboard:copy
+URxvt.keysym.C-p: perl:clipboard:paste
+URxvt.keysym.M-C-p: perl:clipboard:paste_escaped
+
+! keyboard select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+
+! XTerm
+XTerm*faceName:	terminus:normal:pixelsize=12
+XTerm*bellIsUrgent:	true
+XTerm*scrollBar: false
+
+! source colors
+#include "/home/vehk/.colors/molokai"

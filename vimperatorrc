@@ -1,0 +1,43 @@
+"3.4 (created: 2012/04/02 20:07:29)
+
+highlight Bell display: none;
+highlight Hint font-family: monospace; font-size: 10px; font-weight: bold; color: white; background-color: red; padding: 2px;
+nnoremap h 2h
+nnoremap j 2j
+nnoremap k 2k
+nnoremap l 2l
+nnoremap b :tabnext<CR>
+nnoremap B :tabprev<CR>
+nnoremap gt :buffer! 
+nnoremap gT :buffers
+nnoremap sc :noscript 
+nnoremap st :noscript toggletemp<CR>
+nnoremap sT :noscript toggleperm
+nnoremap sp :noscript popup<CR>
+nnoremap si :noscript info<CR>
+set complete=lb
+set defsearch=duck
+set editor="urxvt -e vim"
+set hintchars=abcdefghijklmnopqrstuvwxyz
+set maxitems=10
+set newtab=help,addons,prefs
+set noscrollbars
+set tabnumbers
+set visualbell
+set animations
+
+map S :sanitize!<CR>
+map gma :panorama add 
+map gmA :panorama add! 
+map gmg :panorama switch 
+map gmd :panorama rm 
+map gmD :panorama rm<CR>
+map gms :panorama stash 
+map gmS :panorama stash! 
+map gml :panorama list<CR>
+
+command -nargs=0 yt :execute "!yt -c " + content.location.href + " &"
+
+source! /home/vehk/.vimperatorrc.local
+
+" vim: set ft=vimperator:

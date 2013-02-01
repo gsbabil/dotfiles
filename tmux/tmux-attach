@@ -1,0 +1,15 @@
+#!/bin/bash
+
+session=$1
+
+cd ~/.tmux
+
+[[ ! -f ./tmux-$session ]] && exit 1
+
+./tmux-$session
+
+if [[ -n $TMUX ]]; then
+	tmux switch-client -t $session
+else
+	tmux attach-session -t $session
+fi
