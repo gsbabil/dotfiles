@@ -1,4 +1,4 @@
-#
+# vim: set ft=sh:
 # ~/.bash_profile
 #
 

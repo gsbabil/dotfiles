@@ -1,3 +1,4 @@
+" vim: set ft=vim:
 " Vundle configuration
 filetype off
 

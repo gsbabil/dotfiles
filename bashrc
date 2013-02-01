@@ -64,6 +64,7 @@ alias ll="ls -l --group-directories-first"
 alias ls="ls -h --color"
 alias la="ll -a"
 alias df="df -hT"
+alias du='du -hs'
 alias ..="cd .."
 
 alias rss="newsbeuter"
