@@ -1,0 +1,4 @@
+# vim: set ft=sh:
+[[ "$MPD_STATUS_STATE" = play ]] && mpdnotify
+
+echo "mpdcron({state=\"$MPD_STATUS_STATE\",artist=\"$MPD_SONG_TAG_ARTIST\",title=\"$MPD_SONG_TAG_TITLE\"})" | awesome-client
