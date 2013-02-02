@@ -12,6 +12,8 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
 	echo ""
 	fortune -aec
 	echo ""
+	pal -r 1-2
+	echo ""
 	echo "Greetings, $USER."
 	read -erp "Start X? [Y/n]: "
 	case $REPLY in

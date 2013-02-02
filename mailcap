@@ -1,7 +1,7 @@
 #text/html; elinks -dump -dump-charset %{charset} -default-mime-type text/html %s; needsterminal; copiousoutput;
 text/html; w3m -dump -I %{charset} -T text/html %s; needsterminal; copiousoutput;
 image/gif; gifview -a %s
-image/*; feh -q %s
+image/*; sxiv -q %s
 application/pdf; zathura %s
 application/msword; antiword %s; copiousoutput
 audio/*; mplayer %s
