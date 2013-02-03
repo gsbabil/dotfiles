@@ -57,31 +57,28 @@ shopt -s extglob            # enable extended pattern-matching features
 
 # aliases
 alias grep="grep --color=auto"
-alias egrep="grep -E --color=auto"
+alias egrep="grep -E"
+
 alias diff="colordiff"
 
-alias ll="ls -l --group-directories-first"
-alias ls="ls -h --color"
+alias ls="ls -h --color --group-directories-first"
+alias ll="ls -l"
 alias la="ll -a"
+
 alias df="df -hT"
 alias du='du -hs'
+
 alias ..="cd .."
 
 alias rss="newsbeuter"
-
 alias pacman="pacman-color"
-
 alias less="/usr/share/vim/vim73/macros/less.sh"
-
 alias pw="pwsafe"
 alias Man="/usr/bin/man"
 alias Less="/usr/bin/less"
-
 alias pactree="pactree -c"
 alias pacdeps="pactree -r"
-
 alias lock='i3lock -c000000'
-
 alias rsync='rsync -avhP'
 alias iv='sxiv'
 
