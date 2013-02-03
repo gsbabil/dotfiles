@@ -12,8 +12,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 local vicious = require("vicious")
--- Orglendar
-local cal = require("cal")
 -- Rodentbane
 -- local rodentbane = require("rodentbane")
 
@@ -100,13 +98,12 @@ local layouts =
 }
 -- {{{ Tags
 tags = {
-	names1 = { "1:hub", "2:www", "3:irc", "4:src", "5:ssh", 6, 7, 8, "9:dl" },
+	names1 = { "1:www", "2:dev", "3:fs", 4, 5, 6, 7, 8, 9 },
+	names2 = { "1:hub", "2:irc", "3:ssh", 4, 5, 6, 7, 8, "9:dl" }
 }
 
 tags[1] = awful.tag(tags.names1, 1, layouts[1])
-
-awful.tag.setproperty(tags[1][3], "mwfact", 0.6)
-awful.tag.setproperty(tags[1][9], "layout", awful.layout.suit.tile.bottom)
+tags[2] = awful.tag(tags.names2, 2, layouts[1])
 
 -- }}}
 
@@ -129,8 +126,7 @@ menu_main = awful.menu({
 		{ "awesome", menu_awesome, beautiful.awesome_icon },
 		{ "tmux", menu_mux },
 		{ "terminal", terminal },
-		{ "firefox-nv", "optirun firefox" },
-		{ "firefox-in", "firefox" },
+		{ "firefox", "firefox" },
 	}
 })
 
@@ -156,9 +152,9 @@ mytaglist.buttons = awful.util.table.join(
 awful.button({ }, 1, awful.tag.viewonly),
 awful.button({ modkey }, 1, awful.client.movetotag),
 awful.button({ }, 3, awful.tag.viewtoggle),
-awful.button({ modkey }, 3, awful.client.toggletag)
---awful.button({ }, 4, awful.tag.viewnext),
---awful.button({ }, 5, awful.tag.viewprev)
+awful.button({ modkey }, 3, awful.client.toggletag),
+awful.button({ }, 4, awful.tag.viewnext),
+awful.button({ }, 5, awful.tag.viewprev)
 )
 
 mytasklist = {}
@@ -193,6 +189,7 @@ awful.button({ }, 5, function ()
 	if client.focus then client.focus:raise() end
 end)
 )
+
 for s = 1, screen.count() do
 	-- Create a promptbox for each screen
 	mypromptbox[s] = awful.widget.prompt()
@@ -298,18 +295,6 @@ cpugraph = awful.widget.graph()
 --return cpus
 --end,2)
 
-batwidget = wibox.widget.textbox()
-
-vicious.register(batwidget, vicious.widgets.bat,
-function (widget, args)
-	status = hi_string(args[1], beautiful.fg_focus)
-	color = args[2] >= 65 and beautiful.fg_normal or args[2] >= 35 and beautiful.fg_focus or beautiful.fg_urgent
-	percentage = (args[2] == 100) and "" or " "..hi_string(args[2].."%", color)
-	remaining = (args[3] == "N/A") and "" or " "..hi_string(args[3], beautiful.fg_normal)
-
-	return string.format("[%s%s%s]", status, percentage, args[2] <=50 and remaining or "")
-end, 10, "BAT0")
-
 -- volume widgets
 volwidget = wibox.widget.textbox()
 
@@ -322,52 +307,21 @@ function (widget, args)
 end, 2, "Master")
 
 volwidget:buttons(awful.util.table.join(
-	awful.button({ }, 4, function () exec("mpc -q volume +2", false) end),
-	awful.button({ }, 5, function () exec("mpc -q volume -2", false) end)
+awful.button({ }, 4, function () exec("mpc -q volume +2", false) end),
+awful.button({ }, 5, function () exec("mpc -q volume -2", false) end)
 ))
---fs widgets
-fstmpwidget = wibox.widget.textbox()
 
---vicious.register(fstmpwidget, vicious.widgets.fs,
---function (widget, args)
---tmp_p = hi_string(args["{/tmp used_p}"] .. "%", beautiful.fg_urgent)
---shm_p = hi_string(args["{/dev/shm used_p}"] .. "%", beautiful.fg_urgent)
---var_p = hi_string(args["{/var used_p}"] .. "%", beautiful.fg_urgent)
---home_p = hi_string(args["{/home used_p}"] .. "%", beautiful.fg_urgent)
---root_p = hi_string(args["{/ used_p}"] .. "%", beautiful.fg_urgent)
-
---tmp = hi_string("/tmp: ", beautiful.fg_focus)
---shm = hi_string("/shm: ", beautiful.fg_focus)
---var = hi_string("/var: ", beautiful.fg_focus)
---home = "/home: " 
-
---return "/root: "..root_p.." "..home..home_p.."  "..tmp..tmp_p.." "..shm..shm_p.." "..var..var_p
-
---end, 10)
-
--- Initialize widget
+---- Initialize widget
 netwidget = wibox.widget.textbox()
--- Register widget
+---- Register widget
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
-	down_f = args["{enp3s0 down_kb}"] .. "kb "
-	up_f = args["{enp3s0 up_kb}"] .. "kb"
+	down_f = args["{enp5s0 down_kb}"] .. "kb "
+	up_f = args["{enp5s0 up_kb}"] .. "kb"
 	down = hi_string(down_f, beautiful.fg_urgent)
 	up = hi_string(up_f, beautiful.fg_focus)
-	wlan_down_f = args["{wlp2s0 down_kb}"] .. "kb "
-	wlan_up_f = args["{wlp2s0 up_kb}"] .. "kb"
-	wlan_down = hi_string(wlan_down_f, beautiful.fg_urgent)
-	wlan_up = hi_string(wlan_up_f, beautiful.fg_focus)
 
-	tap_string = ""
-	if (args["{tap0 carrier}"]) then
-		tap_down_f = args["{tap0 down_kb}"] .. "kb "
-		tap_up_f = args["{tap0 up_kb}"] .. "kb"
-		tap_down = hi_string(tap_down_f, beautiful.fg_urgent)
-		tap_up = hi_string(tap_up_f, beautiful.fg_focus)
-		tap_string = " | [vpn " .. tap_down .. tap_up .. "]"
-	end
-	return "[" .. down .. up .. "] | [" .. wlan_down .. wlan_up .. "]".. tap_string
+	return "[" .. down .. up .. "]"
 end, 2)
 
 mystatusbar = awful.wibox({ position = "bottom", screen = 1 })
@@ -377,14 +331,11 @@ left_layout:add(padding)
 left_layout:add(uptimewidget)
 left_layout:add(padding)
 left_layout:add(netwidget)
-left_layout:add(padding)
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(mpdwidget)
 right_layout:add(padding)
 right_layout:add(volwidget)
-right_layout:add(padding)
-right_layout:add(batwidget)
 
 local layout = wibox.layout.align.horizontal()
 layout:set_left(left_layout)
@@ -393,9 +344,9 @@ layout:set_right(right_layout)
 mystatusbar:set_widget(layout)
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-awful.button({ }, 3, function () menu_main:toggle() end)
--- awful.button({ }, 4, awful.tag.viewnext),
--- awful.button({ }, 5, awful.tag.viewprev)
+awful.button({ }, 3, function () menu_main:toggle() end),
+awful.button({ }, 4, awful.tag.viewnext),
+awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -449,14 +400,12 @@ awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, 
 
 awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
--- Music Player Daemon and audio volume controls
-awful.key({}, "XF86AudioRaiseVolume", function () exec("amixer -q set Master playback 2+db") end),
-awful.key({}, "XF86AudioLowerVolume",  function () exec("amixer -q set Master playback 2-db") end),
-awful.key({}, "XF86AudioMute", function () exec("amixer -q set Master toggle") end),
-
-awful.key({}, "XF86AudioNext", function () exec("mpc next") end),
-awful.key({}, "XF86AudioPrev", function () exec("mpc prev") end),
-awful.key({}, "XF86AudioPlay", function () exec("mpc toggle") end),
+-- Music Player Daemon controls
+awful.key({ modkey }, ".", function () exec("mpc -q volume +2") end),
+awful.key({ modkey }, ",", function () exec("mpc -q volume -2") end),
+awful.key({ modkey, "Shift" }, ".", function () exec("mpc next") end),
+awful.key({ modkey, "Shift" }, ",", function () exec("mpc prev") end),
+awful.key({ modkey, "Shift" }, "/", function () exec("mpc toggle") end),
 
 -- Misc
 awful.key({ modkey }, "F12", function () awful.util.spawn("i3lock --color 000000") end),
@@ -482,12 +431,7 @@ awful.key({ modkey, "Shift" },   "m",     function () awful.util.spawn("dmnt -nu
 awful.key( {}, "Print", function() awful.util.spawn("scrot -e 'mv $f ~/etc/scrot/ 2>/dev/null'") end),
 
 -- get rid of this pesky rodent
--- awful.key( { modkey }, "b", function() rodentbane.start() end),
-
-awful.key({ modkey }, "q", function ()
-	-- If you want to always position the menu on the same place set coordinates
-	local cmenu = awful.menu.clients({ theme = { width=500 }}, { keygrabber=true, coords={x=525, y=330} })
-end),
+awful.key( { modkey }, "b", function() rodentbane.start() end),
 
 awful.key({ modkey }, "x",
 function ()
@@ -495,9 +439,7 @@ function ()
 	mypromptbox[mouse.screen].widget,
 	awful.util.eval, nil,
 	awful.util.getdir("cache") .. "/history_eval")
-end),
-
-awful.key( {}, "XF86TouchpadToggle", function() exec("touchctrl") end)
+end)
 )
 
 clientkeys = awful.util.table.join(
@@ -599,19 +541,21 @@ properties = { floating = true } },
 { rule = { class = "Gifview" },
 properties = { floating = true } },
 { rule = { class = "URxvt", instance = "hub" },
-properties = { tag = tags[1][1] } },
+properties = { tag = tags[2][1] } },
+{ rule = { class = "URxvt", instance = "fs" },
+properties = { tag = tags[1][3]} },
 { rule = { class = "URxvt", instance = "ssh" },
-properties = { tag = tags[1][5] } },
+properties = { tag = tags[2][3] } },
 { rule = { class = "URxvt", instance = "irc" },
-properties = { tag = tags[1][3] } },
+properties = { tag = tags[2][2] } },
 { rule = { class = "URxvt", instance = "float" },
 properties = { floating = true } },
 { rule = { class = "Firefox" },
-properties = { tag = tags[1][2], focus = false } },
+properties = { tag = tags[1][1], focus = false } },
 { rule = { class = "Firefox", instance = "DTA" },
-properties = { tag = tags[1][9] } },
+properties = { tag = tags[2][9], minimized = false } },
 { rule = { class = "Firefox", instance = "Download" },
-properties = { floating = true } },
+properties = { tag = tags[2][9], minimized = false } },
 { rule = { instance = "plugin-container" },
 properties = { floating = true } },
 }
