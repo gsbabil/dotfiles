@@ -82,7 +82,7 @@ alias pacdeps="pactree -r"
 
 alias lock='i3lock -c000000'
 
-alias rsync='rsynv -avhP'
+alias rsync='rsync -avhP'
 alias iv='sxiv'
 
 if [ $UID -ne 0 ]; then
