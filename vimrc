@@ -16,6 +16,9 @@ source /usr/share/vim/vim73/ftplugin/man.vim
 "viminfo
 set viminfo+=n~/.vim/.viminfo
 
+set ttyfast
+set lazyredraw
+
 " Delete ALL the things!
 set backspace=indent,eol,start
 
@@ -76,7 +79,7 @@ set mouse=
 set listchars=eol:¬,tab:▸\ 
 
 set wildmenu
-set wildmode=longest:full,full
+set wildmode=list:longest
 
 " autocmd settings
 if has('autocmd')
