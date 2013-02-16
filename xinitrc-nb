@@ -30,7 +30,10 @@ xset +dpms
 xset dpms 0 0 120
 
 # start syndaemon. ignore taps and scrolling when typing
-syndaemon -i 3 -t -k -d
+# syndaemon -i 3 -t -k -d
+
+# Disable touchpad
+synclient TouchpadOff=1
 
 # activate numpad
 numlockx &
