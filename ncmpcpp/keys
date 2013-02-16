@@ -121,9 +121,9 @@ key_next_column = 261 'l'
 #
 #key_find_backward = '?'
 #
-#key_next_found_position = '.'
+key_next_found_position = 'n'
 #
-#key_prev_found_position = ','
+key_prev_found_position = 'N'
 #
 #key_toggle_find_mode = 'w'
 #
@@ -149,9 +149,9 @@ key_next_column = 261 'l'
 #
 #key_crop = 'C'
 #
-#key_move_song_up = 'm'
+key_move_song_up = ','
 #
-#key_move_song_down = 'n'
+key_move_song_down = '.'
 #
 #key_move_to = 'M'
 #
