@@ -3,7 +3,7 @@
 tmux has-session -t irc
 
 if [[ $? -eq 1 ]]; then
-	tmux new-session -d -s irc
+    tmux new-session -d -s irc
 
-	tmux new-window -t irc:0 -k -n 'irc' 'weechat-curses'
+    tmux new-window -t irc:0 -k -n 'irc' 'weechat-curses'
 fi

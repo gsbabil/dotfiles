@@ -9,7 +9,7 @@ cd ~/.tmux
 ./tmux-$session
 
 if [[ -n $TMUX ]]; then
-	tmux switch-client -t $session
+    tmux switch-client -t $session
 else
-	tmux attach-session -t $session
+    tmux attach-session -t $session
 fi

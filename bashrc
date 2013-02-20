@@ -8,21 +8,21 @@
 PROMPT_DIRTRIM=2
 
 _ranger_string() {
-	echo "${RANGER_LEVEL:+:r$RANGER_LEVEL}"
+    echo "${RANGER_LEVEL:+:r$RANGER_LEVEL}"
 }
 
 if [ -n "$SSH_CLIENT" ]; then
-	if [[ "$TERM" =~ "256color" ]]; then
-		PS1='[\e[0;33m\]\u@\h$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
-	else
-		PS1='[\u@\h$(_ranger_string) \w]\$ '
-	fi
+    if [[ "$TERM" =~ "256color" ]]; then
+        PS1='[\e[0;33m\]\u@\h$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
+    else
+        PS1='[\u@\h$(_ranger_string) \w]\$ '
+    fi
 else
-	if [[ "$TERM" =~ "256color" ]]; then
-		PS1='[\u$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
-	else
-		PS1='[\u$(_ranger_string) \w]\$ '
-	fi
+    if [[ "$TERM" =~ "256color" ]]; then
+        PS1='[\u$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
+    else
+        PS1='[\u$(_ranger_string) \w]\$ '
+    fi
 fi
 
 eval $(dircolors -b ~/.dircolors)
@@ -83,41 +83,41 @@ alias rsync='rsync -avhP'
 alias iv='sxiv'
 
 if [ $UID -ne 0 ]; then
-	alias sudo='sudo '
-	alias reboot='sudo reboot'
-	alias poweroff='sudo poweroff'
+    alias sudo='sudo '
+    alias reboot='sudo reboot'
+    alias poweroff='sudo poweroff'
 fi
 
 # eval keychain if env-file exists
 if [[ -f $HOME/.keychain/$HOSTNAME-sh ]]; then
-	. $HOME/.keychain/$HOSTNAME-sh
+    . $HOME/.keychain/$HOSTNAME-sh
 fi
 
 # a wrapper that displays the manpage in vim
 man() {
-	[[ $# -lt 1 ]] && echo "What manual page do you want?" && return
+    [[ $# -lt 1 ]] && echo "What manual page do you want?" && return
 
-	/usr/bin/man -w "$@" &> /dev/null
-	(( $? == 16 )) && echo "No such manual." && return
+    /usr/bin/man -w "$@" &> /dev/null
+    (( $? == 16 )) && echo "No such manual." && return
 
-	vim -RMnc "Man $1 $2" -c "1bw" -c "set so=100" -c "map q :q<CR>" -c "set nomodifiable"
+    vim -RMnc "Man $1 $2" -c "1bw" -c "set so=100" -c "map q :q<CR>" -c "set nomodifiable"
 }
 
 # eval keychain
 sshchain() {
-	eval $(keychain --eval --agents ssh -Q --quiet id_ecdsa id_rsa)
+    eval $(keychain --eval --agents ssh -Q --quiet id_ecdsa id_rsa)
 }
 
 # sprunge pastebin service
 sprunge() {
-	curl -F 'sprunge=<-' http://sprunge.us
+    curl -F 'sprunge=<-' http://sprunge.us
 }
 
 # small rtcwake wrapper
 wake() {
-	[[ $# -lt 1 ]] && echo "No wake up date given." && return
-	date="$@"
-	unixd=$(date -d "$date" +%s) || return
+    [[ $# -lt 1 ]] && echo "No wake up date given." && return
+    date="$@"
+    unixd=$(date -d "$date" +%s) || return
 
-	sudo rtcwake -t $unixd -m mem
+    sudo rtcwake -t $unixd -m mem
 }

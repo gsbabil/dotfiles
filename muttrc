@@ -64,8 +64,8 @@ color quoted6 red default
 color quoted7 cyan default
 
 #TOFU coloring
-color body	brightcyan	default	"^\\[---.*"
-color body	yellow		default	"^#v[-+]"
+color body  brightcyan  default "^\\[---.*"
+color body  yellow      default "^#v[-+]"
 
 folder-hook . "push <collapse-all>" #collapse all threads when opening a folder
 

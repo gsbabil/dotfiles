@@ -13,21 +13,21 @@ auto_update "yes"
 # MPD audio output
 #
 audio_output {
-	type "alsa"
-	name "ALSA"
-	format "96000:16:2"
-	mixer_control "Master"
-	auto_format "yes"
-	auto_resample "yes"
+    type "alsa"
+    name "ALSA"
+    format "96000:16:2"
+    mixer_control "Master"
+    auto_format "yes"
+    auto_resample "yes"
 }
 
 audio_output {
-	type "httpd"
-	name "HTTP Stream"
-	host "localhost"
-	encoder "flac"
-	port "8000"
-	format "96000:16:2"
+    type "httpd"
+    name "HTTP Stream"
+    host "localhost"
+    encoder "flac"
+    port "8000"
+    format "96000:16:2"
 }
 
 # General audio options

@@ -5,9 +5,9 @@ set nocompatible
 source ~/.vundlerc
 
 if &t_Co > 2 || has("gui_running")
-	" Syntax highlighting
-	syntax enable
-	colorscheme molokai
+    " Syntax highlighting
+    syntax enable
+    colorscheme molokai
 endif
 
 "set up man plugin
@@ -42,6 +42,7 @@ set enc=utf-8
 set tabstop=4
 set shiftwidth=4
 set smarttab
+set expandtab
 
 " Enable autoindent
 set autoindent
@@ -83,14 +84,14 @@ set wildmode=list:longest
 
 " autocmd settings
 if has('autocmd')
-	" terminal bell (again, for gui)
-	autocmd GUIEnter * set visualbell t_vb=
+    " terminal bell (again, for gui)
+    autocmd GUIEnter * set visualbell t_vb=
 
-	" Enable file type detection.
-	filetype plugin indent on
+    " Enable file type detection.
+    filetype plugin indent on
 
-	" mail-specific settings
-	autocmd FileType mail set noautoindent
+    " mail-specific settings
+    autocmd FileType mail set noautoindent
 endif
 
 " keybinds

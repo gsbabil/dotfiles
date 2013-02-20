@@ -3,10 +3,10 @@
 tmux has-session -t fs
 
 if [[ $? -eq 1 ]]; then
-	tmux new-session -d -s fs
+    tmux new-session -d -s fs
 
-	tmux new-window -t fs:0 -k -n 'fs' 'bash -ic ranger'
-	tmux new-window -t fs:1
+    tmux new-window -t fs:0 -k -n 'fs' 'bash -ic ranger'
+    tmux new-window -t fs:1
 
-	tmux select-window -t fs:0
+    tmux select-window -t fs:0
 fi

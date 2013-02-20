@@ -1,9 +1,9 @@
 defaults.pcm.rate_converter "samplerate_best"
 
 pcm.!default {
-	type plug
+    type plug
 
-	slave.pcm "bs2b"
+    slave.pcm "bs2b"
 
 }
 
@@ -27,38 +27,38 @@ pcm.dmix0 {
 }
 
 pcm.softvol {
-	type softvol
-	slave.pcm "dmix0"
+    type softvol
+    slave.pcm "dmix0"
 
-	control {
-		name "Master"
-		card 0
-	}
+    control {
+        name "Master"
+        card 0
+    }
 
-	min_dB -45.0
-	max_dB 5.0
+    min_dB -45.0
+    max_dB 5.0
 }
 
 pcm.headphonesplug {
-	type plug
-	slave.pcm "softvol"
+    type plug
+    slave.pcm "softvol"
 }
 
 pcm.bs2b {
-	type ladspa
-		slave.pcm "headphonesplug"
-		path "/usr/lib/ladspa"
-		plugins [
-		{
-			label bs2b
-				input {
-					controls [ 700 4.5 ]
-				}
-		}
-	]
+    type ladspa
+        slave.pcm "headphonesplug"
+        path "/usr/lib/ladspa"
+        plugins [
+        {
+            label bs2b
+                input {
+                    controls [ 700 4.5 ]
+                }
+        }
+    ]
 }
 
 pcm.headphones {
-	type plug
-	slave.pcm "bs2b"
+    type plug
+    slave.pcm "bs2b"
 }
