@@ -45,6 +45,8 @@ end
 --autostart
 awful.util.spawn_with_shell(awful.util.getdir("config") .. "/autostart")
 
+gears.wallpaper.tiled("/home/vehk/.current_wallpaper", s , {x = 0, y = -30})
+
 -- function aliases
 local exec = function(cmd) awful.util.spawn(cmd, false) end
 
@@ -72,8 +74,6 @@ awful.menu.menu_keys = {
 
 -- Themes define colours, icons, and wallpapers
 beautiful.init(awful.util.getdir("config") .. "/themes/zenburn/theme.lua")
-
-gears.wallpaper.maximized("/home/vehk/.current_wallpaper", s, true)
 
 terminal = "urxvtc"
 terminal_float = "urxvtc -name float"
@@ -205,7 +205,7 @@ for s = 1, screen.count() do
     awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
     awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.noempty, mytaglist.buttons)
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
@@ -536,8 +536,15 @@ for i = 1, keynumber do
     awful.key({ modkey }, "#" .. i + 9,
     function ()
         local screen = mouse.screen
-        if tags[screen][i] then
-            awful.tag.viewonly(tags[screen][i])
+        local id = i
+        if i ~= awful.tag.getidx() then
+            last = awful.tag.getidx()
+        else
+            id = last
+        end
+
+        if tags[screen][id] then
+            awful.tag.viewonly(tags[screen][id])
         end
     end),
     awful.key({ modkey, "Control" }, "#" .. i + 9,

@@ -23,7 +23,7 @@
 
 # cat /proc/asound/card0/pcm0p/sub0/hw_params
 
-defaults.pcm.rate_converter "samplerate_medium"
+defaults.pcm.rate_converter "samplerate_best"
 
 # Posted at http://bbs.archlinux.org/viewtopic.php?id=95582
 # Is a dmix that actually works!

@@ -81,6 +81,7 @@ set listchars=eol:¬,tab:▸\
 
 set wildmenu
 set wildmode=list:longest
+set wildignore+=*.class,*.o
 
 " autocmd settings
 if has('autocmd')
