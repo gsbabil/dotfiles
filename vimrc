@@ -14,10 +14,23 @@ endif
 source /usr/share/vim/vim73/ftplugin/man.vim
 
 "viminfo
-set viminfo+=n~/.vim/.viminfo
+set viminfo='50,\"100,:100,n~/.vim/.viminfo
+set history=1000
+
+set undofile
+set undodir=~/.vimundo
+set nobackup
+set nowritebackup
+set noswapfile
 
 set ttyfast
 set lazyredraw
+
+set scrolloff=3
+
+set hidden
+
+set swb=useopen,usetab
 
 " Delete ALL the things!
 set backspace=indent,eol,start
@@ -69,10 +82,6 @@ set cpoptions+=n
 " show full tag (together with ctags)
 set sft
 
-" no backups needed
-set nobackup
-set nowritebackup
-
 " rodent, begone!
 set mouse=
 
@@ -82,6 +91,7 @@ set listchars=eol:¬,tab:▸\
 set wildmenu
 set wildmode=list:longest
 set wildignore+=*.class,*.o
+set wildignore+=*/.git/*,*/.hg/*
 
 " autocmd settings
 if has('autocmd')
@@ -105,7 +115,15 @@ map <leader>u :GundoToggle<CR>
 map <leader>p :CtrlP<CR>
 
 " We don't want that kind here
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+vnoremap <up> <nop>
+vnoremap <down> <nop>
+vnoremap <left> <nop>
+vnoremap <right> <nop>
