@@ -15,13 +15,14 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
+import qualified XMonad.Hooks.EwmhDesktops as E
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 terminal' = "/usr/bin/urxvtc"
 dmenu = "dmenu_run -i -fn '-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*' -p 'Run:'"
 
-workspaces' = ["1:hub","2:web","3:irc","4:src","5:img"] ++ map show [6..9]
+workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9:fs"]
  
 manageHook' = composeOne [ 
     isFullscreen -?> doFullFloat,
@@ -30,7 +31,7 @@ manageHook' = composeOne [
     (className =? "Firefox" <&&> resource =? "Download") -?> doShift "9",
     className =? "Firefox" -?> doShift "2:web",
 
-    className =? "Sxiv" -?> viewShift "5:img",
+    className =? "Sxiv" -?> doFloat,
     className =? "mplayer2" -?> doFloat,
 
     (className =? "URxvt" <&&> resource =? "float") -?> doFloat,
@@ -40,10 +41,10 @@ manageHook' = composeOne [
     -- Any other window will be swapped down
     return True -?> doF W.swapDown
     ]
-    where
-        viewShift = doF . liftM2 (.) W.greedyView W.shift
+    {-where-}
+        {-viewShift = doF . liftM2 (.) W.greedyView W.shift-}
 
-layout' = onWorkspace "5:img" (full ||| tile) $ tile ||| mtile ||| full
+layout' = onWorkspace "9:fs" (full ||| tile) $ tile ||| mtile ||| full
     where
         rt = ResizableTall 1 (2/100) (1/2) []
         tile = renamed [Replace "[]="] $ smartBorders rt
@@ -56,7 +57,6 @@ fontName' = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
 xmobarTitleColor = "#FFB6B0"
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 borderWidth' = 1
-
 
 modMask' = mod4Mask
  
@@ -133,7 +133,7 @@ startupHook' = do
 
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ uhook defaults {
+  xmonad $ E.ewmh $ uhook defaults {
       logHook = dynamicLogWithPP $ customPP
       {
           ppOutput = hPutStrLn xmproc
@@ -153,6 +153,7 @@ defaults = defaultConfig {
     workspaces         = workspaces',
     normalBorderColor  = normalBorderColor',
     focusedBorderColor = focusedBorderColor',
+    handleEventHook    = handleEventHook defaultConfig <+> E.fullscreenEventHook,
  
     -- key bindings
     keys               = keys',
