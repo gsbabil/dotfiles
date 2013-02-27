@@ -73,8 +73,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     ((modMask, xK_d), safeSpawn ("dmnt") ["-dn"]),
     ((modMask .|. shiftMask, xK_d), safeSpawn ("dmnt") ["-dnu"]),
-    ((modMask, xK_m), safeSpawn ("dmnt") ["-n"]),
-    ((modMask .|. shiftMask, xK_m), safeSpawn ("dmnt") ["-nu"]),
+
+    ((modMask, xK_u), safeSpawn ("dmnt") ["-n"]),
+    ((modMask .|. shiftMask, xK_u), safeSpawn ("dmnt") ["-nu"]),
 
     ((modMask, xK_p), safeSpawn ("scrot") ["-e","mv $f ~/etc/scrot/"]),
 
