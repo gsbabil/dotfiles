@@ -13,6 +13,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
+import XMonad.Actions.GridSelect
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.Hooks.EwmhDesktops as E
@@ -59,7 +60,7 @@ xmobarCurrentWorkspaceColor = "#CEFFAC"
 borderWidth' = 1
 
 modMask' = mod4Mask
- 
+
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ 
     ((modMask, xK_Return), safeSpawn (XMonad.terminal conf) []),
@@ -67,6 +68,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     ((modMask .|. controlMask, xK_l), safeSpawn ("i3lock") ["-c","000000"]),
     ((modMask, xK_p), spawn dmenu),
+
+    ((modMask, xK_g), goToSelected defaultGSConfig),
 
     ((modMask .|. controlMask, xK_k), safeSpawn ("amixer") ["-q","set","Master","playback","2+db"]),
     ((modMask .|. controlMask, xK_j), safeSpawn ("amixer") ["-q","set","Master","playback","2-db"]),
