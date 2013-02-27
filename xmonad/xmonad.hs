@@ -27,8 +27,8 @@ workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9
 manageHook' = composeOne [ 
     isFullscreen -?> doFullFloat,
 
-    (className =? "Firefox" <&&> resource =? "DTA") -?> doShift "9",
-    (className =? "Firefox" <&&> resource =? "Download") -?> doShift "9",
+    (className =? "Firefox" <&&> resource =? "DTA") -?> doShift "8:dl",
+    (className =? "Firefox" <&&> resource =? "Download") -?> doShift "8:dl",
     className =? "Firefox" -?> doShift "2:web",
 
     className =? "Sxiv" -?> doFloat,
@@ -44,7 +44,7 @@ manageHook' = composeOne [
     {-where-}
         {-viewShift = doF . liftM2 (.) W.greedyView W.shift-}
 
-layout' = onWorkspace "9:fs" (full ||| tile) $ tile ||| mtile ||| full
+layout' = onWorkspace "9:fs" (full) $ tile ||| mtile ||| full
     where
         rt = ResizableTall 1 (2/100) (1/2) []
         tile = renamed [Replace "[]="] $ smartBorders rt
