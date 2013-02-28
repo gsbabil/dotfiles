@@ -80,7 +80,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ((modMask, xK_u), safeSpawn ("dmnt") ["-n"]),
     ((modMask .|. shiftMask, xK_u), safeSpawn ("dmnt") ["-nu"]),
 
-    ((modMask, xK_p), safeSpawn ("scrot") ["-e","mv $f ~/etc/scrot/"]),
+    ((modMask .|. shiftMask, xK_p), safeSpawn ("scrot") ["-e","mv $f ~/etc/scrot/"]),
 
     ((modMask .|. shiftMask, xK_c), kill),
 
@@ -127,7 +127,7 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
                        ppHidden = xmobarColor "#AFAF87" "",
                        ppUrgent = xmobarColor "#D7005F" "" . wrap "[" "]",
                        ppLayout = xmobarColor "#AE81FF" "",
-                       ppTitle  = xmobarColor "#D0CFD0" "" . shorten 80,
+                       ppTitle  = xmobarColor "#D0CFD0" "" . shorten 120,
                        ppSep    = xmobarColor "#3F3F3F" "" " | "
                      }
 

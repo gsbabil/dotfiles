@@ -1,7 +1,7 @@
 # vim: set ft=sh:
 if [[ "$MPD_STATUS_STATE" = play ]]; then
     mpdnotify
-    echo "<fc=#AE81FF>$MPD_SONG_TAG_ARTIST - $MPD_SONG_TAG_TITLE</fc>" > ~/.xmonad/pipe_mpd
+    echo "<fc=#387BAB>$MPD_SONG_TAG_ARTIST<fc=#4F3F3F> - </fc>$MPD_SONG_TAG_TITLE</fc>" > ~/.xmonad/pipe_mpd
 fi
 
 if [[ "$MPD_STATUS_STATE" = stop ]]; then

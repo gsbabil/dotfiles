@@ -17,5 +17,5 @@ Config {
         Run PipeReader ":/home/vehk/.xmonad/pipe_mpd" "mpdpipe",
         Run StdinReader
     ],
-    template = " %StdinReader% }{ <fc=#D0CFD0>%mpdpipe%<fc=#3F3F3F> | </fc></fc>%load%<fc=#3F3F3F> | </fc>%battery%<fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
+    template = " %StdinReader% }{ <fc=#D0CFD0>%mpdpipe%<fc=#3F3F3F> | </fc></fc><fc=#B973FF>%load%</fc><fc=#4F3F3F> | </fc>%battery%<fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
 }
