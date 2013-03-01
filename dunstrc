@@ -15,7 +15,7 @@ ignore_newline = no
 
 
 # geometry [{width}]x{height}][+/-{x}+/-{y}]
-geometry = "400x5-30+20"
+geometry = "300-10+20"
 
 transparency = 0
 idle_threshold = 120
@@ -45,16 +45,16 @@ history = ctrl+mod1+l
 context = ctrl+shift+period
 
 [urgency_low]
-background = "#AFAF87"
-foreground = "#121212"
+background = "#121212"
+foreground = "#D0CFD0"
 timeout = 5
 
 [urgency_normal]
-background = "#121212"
+background = "#005F87"
 foreground = "#D0CFD0"
 timeout = 12
 
 [urgency_critical]
 background = "#D7005F"
-foreground = "#121212"
+foreground = "#D0CFD0"
 timeout = 0
