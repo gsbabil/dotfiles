@@ -1,0 +1,60 @@
+[global]
+font = Terminus 8
+
+# for a complete reference see http://developer.gnome.org/pango/stable/PangoMarkupFormat.html
+allow_markup = yes
+format = "<b>%s</b>\n%b"
+sort = yes
+indicate_hidden = yes
+alignment = left
+
+bounce_freq = 0
+show_age_threshold = 60
+word_wrap = yes
+ignore_newline = no
+
+
+# geometry [{width}]x{height}][+/-{x}+/-{y}]
+geometry = "400x5-30+20"
+
+transparency = 0
+idle_threshold = 120
+monitor = 0
+follow = mouse
+sticky_history = yes
+line_height = 0
+separator_height = 1
+padding = 8
+horizontal_padding = 8
+
+separator_color = "#3F3F3F"
+startup_notification = false
+
+dmenu = /usr/bin/dmenu -i -fn -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-* -p dunst:
+browser = /usr/bin/firefox -new-tab
+
+[frame]
+width = 1
+color = "#6C6C6C"
+
+[shortcuts]
+# these don't work yet :(
+close = ctrl+mod1+space
+close_all = ctrl+mod1+a
+history = ctrl+mod1+l
+context = ctrl+shift+period
+
+[urgency_low]
+background = "#AFAF87"
+foreground = "#121212"
+timeout = 5
+
+[urgency_normal]
+background = "#121212"
+foreground = "#D0CFD0"
+timeout = 12
+
+[urgency_critical]
+background = "#D7005F"
+foreground = "#121212"
+timeout = 0
