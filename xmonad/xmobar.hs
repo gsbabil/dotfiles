@@ -8,11 +8,10 @@ Config {
         Run Date "%a %y-%m-%d %H:%M:%S %Z [%z] " "date" 10,
         Run Com "/usr/bin/cut" ["-d ' ' -f1-3 /proc/loadavg"] "load" 50,
         Run BatteryP ["BAT0"] [
-                "-t", "<acstatus><watts> [<left>%]",
-                "-L", "10", "-H", "80", "-p", "3",
-                "--", "-O", "<fc=green>On</fc> - ", "-o", "",
-                "-L", "-15", "-H", "-5",
-                "-l", "red", "-m", "blue", "-h", "green"
+                "-t", "<acstatus><left>", "-S", "True",
+                "-L", "30", "-H", "70", "-p", "3",
+                "-l", "#D74083", "-n", "#FF9926", "-h", "#93FF19",
+                "--", "-O", "+", "-o", "-", "-f", "BAT0/subsystem/ADP0/online"
             ] 600,
         Run PipeReader ":/home/vehk/.xmonad/pipe_mpd" "mpdpipe",
         Run StdinReader
