@@ -14,6 +14,8 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
 import XMonad.Actions.GridSelect
+import XMonad.Util.Scratchpad
+import XMonad.Actions.CycleWS
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.Hooks.EwmhDesktops as E
@@ -35,7 +37,6 @@ manageHook' = composeOne [
     className =? "Sxiv" -?> doFloat,
     className =? "mplayer2" -?> doFloat,
 
-    (className =? "URxvt" <&&> resource =? "float") -?> doFloat,
     (className =? "URxvt" <&&> resource =? "irc") -?> doShift "3:irc",
     (className =? "URxvt" <&&> resource =? "hub") -?> doShift "1:hub",
 
@@ -64,7 +65,9 @@ modMask' = mod4Mask
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ 
     ((modMask, xK_Return), safeSpawn (XMonad.terminal conf) []),
-    ((modMask, xK_BackSpace), safeSpawn (XMonad.terminal conf) ["-name", "float"]),
+
+    ((modMask, xK_BackSpace), scratchpadSpawnAction conf),
+    ((modMask .|. shiftMask, xK_BackSpace), toggleOrView "NSP"),
 
     ((modMask .|. controlMask, xK_l), safeSpawn ("i3lock") ["-c","000000"]),
     ((modMask, xK_p), spawn dmenu),
@@ -110,12 +113,17 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ((modMask, xK_q), restart "xmonad" True)
   ]
   ++
- 
-  -- mod-[1..9], Switch to workspace N
+
+  -- mod-[1..9], Switch to workspace N or, if already there,
+  -- go to last selected workspace
+  [((modMask, k), toggleOrDoSkip ["NSP"] W.greedyView $ i)
+      | (i, k) <- zip (workspaces') [xK_1 .. xK_9]]
+  ++
+
   -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-      , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+      , (f, m) <- [(W.shift, shiftMask)]]
   ++
 
   -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -126,12 +134,14 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
  
  
 customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
-                       ppHidden = xmobarColor "#AFAF87" "",
+                       ppHidden = filterScratchPad,
                        ppUrgent = xmobarColor "#D7005F" "" . wrap "[" "]",
                        ppLayout = xmobarColor "#AE81FF" "",
                        ppTitle  = xmobarColor "#D0CFD0" "" . shorten 100,
                        ppSep    = xmobarColor "#3F3F3F" "" " | "
                      }
+                     where
+                        filterScratchPad ws = if ws == "NSP" then "" else ws
 
 startupHook' = do
     safeSpawn ("~/.xmonad/startup") []
@@ -143,11 +153,12 @@ main = do
       {
           ppOutput = hPutStrLn xmproc
       }
-      , manageHook = manageDocks <+> manageHook'
+      , manageHook = scratch <+> manageDocks <+> manageHook'
   }
   where
       uhook = withUrgencyHookC NoUrgencyHook uconf 
       uconf = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
+      scratch = scratchpadManageHookDefault
 
 defaults = defaultConfig {
     -- simple stuff
