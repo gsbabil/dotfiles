@@ -40,4 +40,7 @@ urxvtd -q -f -o
 # monitor devices
 devmon --no-mount --exec-on-drive "devnotify %f %l" &> /tmp/devmon.log &
 
-exec awesome
+# load cursor_name
+xsetroot -cursor_name left_ptr
+
+exec xmonad
