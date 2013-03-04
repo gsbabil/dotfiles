@@ -135,6 +135,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
  
 customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
                        ppHidden = filterScratchPad,
+                       ppVisible = xmobarColor "#81C1C1" "",
                        ppUrgent = xmobarColor "#D7005F" "" . wrap "[" "]",
                        ppLayout = xmobarColor "#AE81FF" "",
                        ppTitle  = xmobarColor "#D0CFD0" "" . shorten 100,
