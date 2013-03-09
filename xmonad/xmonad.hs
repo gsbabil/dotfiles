@@ -74,8 +74,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     ((modMask, xK_g), goToSelected defaultGSConfig),
 
-    ((modMask .|. controlMask, xK_k), safeSpawn ("amixer") ["-q","set","Master","playback","2+db"]),
-    ((modMask .|. controlMask, xK_j), safeSpawn ("amixer") ["-q","set","Master","playback","2-db"]),
+    ((modMask .|. controlMask, xK_k), safeSpawn ("amixer") ["-q","set","Master","playback","4+db"]),
+    ((modMask .|. controlMask, xK_j), safeSpawn ("amixer") ["-q","set","Master","playback","4-db"]),
 
     ((modMask, xK_d), safeSpawn ("dmnt") ["-dn"]),
     ((modMask .|. shiftMask, xK_d), safeSpawn ("dmnt") ["-dnu"]),
