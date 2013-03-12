@@ -148,8 +148,8 @@ startupHook' = do
     safeSpawn ("~/.xmonad/startup") []
 
 main = do
-  xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobar.hs"
-  xmproc1 <- spawnPipe "/usr/bin/xmobar -x1 ~/.xmonad/xmobar1.hs"
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmproc1 <- spawnPipe "xmobar -x1 ~/.xmonad/xmobar1.hs"
   xmonad $ E.ewmh $ uhook defaults {
       logHook = dynamicLogWithPP $ customPP
       {
