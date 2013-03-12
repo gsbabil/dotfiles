@@ -13,8 +13,11 @@ Config {
                 "-l", "#D74083", "-n", "#FF9926", "-h", "#93FF19",
                 "--", "-O", "+", "-o", "-", "-f", "BAT0/subsystem/ADP0/online"
             ] 600,
-        Run PipeReader ":/home/vehk/.xmonad/pipe_mpd" "mpdpipe",
+        Run BufferedPipeReader "mpd"
+            [ (  0, False, "/home/vehk/.mpdcron/pipes/pipe_player" ),
+              ( 30, False, "/home/vehk/.mpdcron/pipes/pipe_mixer"  )
+            ]
         Run StdinReader
     ],
-    template = " %StdinReader% }{ <fc=#D0CFD0>%mpdpipe%<fc=#3F3F3F> | </fc></fc><fc=#B973FF>%load%</fc><fc=#4F3F3F> | </fc>%battery%<fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
+    template = " %StdinReader% }{ <fc=#D0CFD0>%mpd%<fc=#3F3F3F> | </fc></fc><fc=#B973FF>%load%</fc><fc=#4F3F3F> | </fc>%battery%<fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
 }

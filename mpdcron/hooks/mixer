@@ -1,0 +1,3 @@
+#!/bin/bash
+volume=$(printf "%02d%%" "$MPD_STATUS_VOLUME")
+echo "volume: $volume" > ~/.mpdcron/pipes/pipe_mixer
