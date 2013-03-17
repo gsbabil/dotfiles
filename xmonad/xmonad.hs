@@ -145,7 +145,7 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
                         filterScratchPad ws = if ws == "NSP" then "" else ws
 
 startupHook' = do
-    safeSpawn ("~/.xmonad/startup") []
+    safeSpawn ("/home/vehk/.xmonad/startup") []
 
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
