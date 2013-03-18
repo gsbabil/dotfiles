@@ -6,16 +6,16 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Spiral
-import XMonad.Hooks.UrgencyHook
+import XMonad.Layout.Grid
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
 import XMonad.Actions.GridSelect
-import XMonad.Util.Scratchpad
 import XMonad.Actions.CycleWS
+import XMonad.Util.Scratchpad
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.Hooks.EwmhDesktops as E
@@ -30,12 +30,12 @@ workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9
 manageHook' = composeOne [ 
     isFullscreen -?> doFullFloat,
 
-    (className =? "Firefox" <&&> resource =? "DTA") -?> doShift "8:dl",
+    (className =? "Firefox" <&&> resource =? "DTA")      -?> doShift "8:dl",
     (className =? "Firefox" <&&> resource =? "Download") -?> doShift "8:dl",
-    className =? "Firefox" -?> doShift "2:web",
+    className  =? "Firefox"                              -?> doShift "2:web",
 
-    className =? "Sxiv" -?> doFloat,
-    className =? "mplayer2" -?> doFloat,
+    className  =? "Sxiv"     -?> doFloat,
+    className  =? "mplayer2" -?> doFloat,
 
     (className =? "URxvt" <&&> resource =? "irc") -?> doShift "3:irc",
     (className =? "URxvt" <&&> resource =? "hub") -?> doShift "1:hub",
@@ -46,19 +46,20 @@ manageHook' = composeOne [
     {-where-}
         {-viewShift = doF . liftM2 (.) W.greedyView W.shift-}
 
-layout' = onWorkspace "9:fs" (full) $ tile ||| mtile ||| full
+layout' = onWorkspace "9:fs" (full) $ tile ||| mtile ||| grid ||| full
     where
-        rt = ResizableTall 1 (2/100) (1/2) []
-        tile = renamed [Replace "[]="] $ smartBorders rt
+        rt    = ResizableTall 1 (2/100) (1/2) []
+        tile  = renamed [Replace "[]="]  $ smartBorders rt
         mtile = renamed [Replace "M[]="] $ smartBorders $ Mirror rt
-        full = renamed [Replace "[]"] $ noBorders Full 
+        full  = renamed [Replace "[]"]   $ noBorders Full
+        grid  = renamed [Replace "[+]"]  $ smartBorders $ Grid
 
-normalBorderColor'  = "#282828"
-focusedBorderColor' = "#D0CFD0"
-fontName' = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
-xmobarTitleColor = "#FFB6B0"
+normalBorderColor'          = "#282828"
+focusedBorderColor'         = "#D0CFD0"
+fontName'                   = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
+xmobarTitleColor            = "#FFB6B0"
 xmobarCurrentWorkspaceColor = "#CEFFAC"
-borderWidth' = 1
+borderWidth'                = 1
 
 modMask' = mod4Mask
 
@@ -134,12 +135,12 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
  
  
 customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
-                       ppHidden = filterScratchPad,
+                       ppHidden  = filterScratchPad,
                        ppVisible = xmobarColor "#81C1C1" "",
-                       ppUrgent = xmobarColor "#D7005F" "" . wrap "[" "]",
-                       ppLayout = xmobarColor "#AE81FF" "",
-                       ppTitle  = xmobarColor "#D0CFD0" "" . shorten 100,
-                       ppSep    = xmobarColor "#3F3F3F" "" " | "
+                       ppUrgent  = xmobarColor "#D7005F" "" . wrap "[" "]",
+                       ppLayout  = xmobarColor "#AE81FF" "",
+                       ppTitle   = xmobarColor "#D0CFD0" "" . shorten 100,
+                       ppSep     = xmobarColor "#3F3F3F" "" " | "
                      }
                      where
                         filterScratchPad ws = if ws == "NSP" then "" else ws
@@ -148,7 +149,7 @@ startupHook' = do
     safeSpawn ("/home/vehk/.xmonad/startup") []
 
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmproc  <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   xmproc1 <- spawnPipe "xmobar -x1 ~/.xmonad/xmobar1.hs"
   xmonad $ E.ewmh $ uhook defaults {
       logHook = dynamicLogWithPP $ customPP
@@ -158,8 +159,8 @@ main = do
       , manageHook = scratch <+> manageDocks <+> manageHook'
   }
   where
-      uhook = withUrgencyHookC NoUrgencyHook uconf 
-      uconf = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
+      uhook   = withUrgencyHookC NoUrgencyHook uconf
+      uconf   = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
       scratch = scratchpadManageHookDefault
 
 defaults = defaultConfig {
