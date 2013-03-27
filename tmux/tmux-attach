@@ -2,11 +2,11 @@
 
 session=$1
 
-cd ~/.tmux
-
-[[ ! -f ./tmux-$session ]] && exit 1
-
-./tmux-$session
+if [[ ! -f ~/.tmux/tmux-$session ]]; then
+    tmux new-session -s $session
+else
+    ~/.tmux/tmux-$session
+fi
 
 if [[ -n $TMUX ]]; then
     tmux switch-client -t $session

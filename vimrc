@@ -90,7 +90,7 @@ set listchars=eol:¬,tab:▸\
 
 set wildmenu
 set wildmode=list:longest
-set wildignore+=*.class,*.o
+set wildignore+=*.class,*.o,*.hi
 set wildignore+=*/.git/*,*/.hg/*
 
 " autocmd settings
