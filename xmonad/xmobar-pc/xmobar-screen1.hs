@@ -10,5 +10,5 @@ Config {
         Run Date "%a %y-%m-%d %H:%M:%S %Z [%z] " "date" 10,
         Run StdinReader
     ],
-    template = " %StdinReader% }{ %enp5s0% <fc=#3F3F3F>|</fc> %memory% <fc=#3F3F3F>|</fc> <fc=#D0CFD0>%date%</fc>"
+    template = " %StdinReader% }{ %enp5s0% <fc=#3F3F3F>|</fc> <fc=#B973FF>%memory%</fc> <fc=#3F3F3F>|</fc> <fc=#D0CFD0>%date%</fc>"
 }
