@@ -16,6 +16,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
-
+Bundle 'ujihisa/neco-ghc'
+Bundle 'dag/vim2hs'
 
 filetype plugin indent on

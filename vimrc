@@ -90,8 +90,10 @@ set listchars=eol:¬,tab:▸\
 
 set wildmenu
 set wildmode=list:longest
-set wildignore+=*.class,*.o
+set wildignore+=*.class,*.o,*.hi
 set wildignore+=*/.git/*,*/.hg/*
+
+let g:haskell_conceal = 0
 
 " autocmd settings
 if has('autocmd')
@@ -113,6 +115,7 @@ nnoremap <silent> ss <C-w>s
 map <leader>d :NERDTreeToggle<CR>
 map <leader>u :GundoToggle<CR>
 map <leader>p :CtrlP<CR>
+map <leader>h :HLint<CR>
 
 " We don't want that kind here
 nnoremap <up> <nop>

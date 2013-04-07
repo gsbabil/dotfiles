@@ -10,6 +10,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Grid
+import XMonad.Layout.Tabbed
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
@@ -25,7 +26,7 @@ import qualified Data.Map        as M
 terminal' = "/usr/bin/urxvtc"
 dmenu = "dmenu_run -i -fn '-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*' -p 'Run:'"
 
-workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9:fs"]
+workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9:vid"]
  
 manageHook' = composeOne [ 
     isFullscreen -?> doFullFloat,
@@ -43,16 +44,15 @@ manageHook' = composeOne [
     -- Any other window will be swapped down
     return True -?> doF W.swapDown
     ]
-    {-where-}
-        {-viewShift = doF . liftM2 (.) W.greedyView W.shift-}
 
-layout' = onWorkspace "9:fs" (full) $ tile ||| mtile ||| grid ||| full
+layout' = onWorkspace "9:vid" (full ||| tab) $ tile ||| mtile ||| grid ||| tab ||| full
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
         tile  = renamed [Replace "[]="]  $ smartBorders rt
         mtile = renamed [Replace "M[]="] $ smartBorders $ Mirror rt
         full  = renamed [Replace "[]"]   $ noBorders Full
         grid  = renamed [Replace "[+]"]  $ smartBorders $ Grid
+        tab   = renamed [Replace "[T]"]  $ tabbedBottom shrinkText tabconfig
 
 normalBorderColor'          = "#282828"
 focusedBorderColor'         = "#D0CFD0"
@@ -67,8 +67,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ 
     ((modMask, xK_Return), safeSpawn (XMonad.terminal conf) []),
 
-    ((modMask, xK_BackSpace), scratchpadSpawnAction conf),
-    ((modMask .|. shiftMask, xK_BackSpace), toggleOrView "NSP"),
+    ((modMask, xK_o), scratchpadSpawnAction conf),
+    ((modMask .|. shiftMask, xK_o), toggleOrView "NSP"),
 
     ((modMask .|. controlMask, xK_l), safeSpawn ("i3lock") ["-c","000000"]),
     ((modMask, xK_p), spawn dmenu),
@@ -78,13 +78,14 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ((modMask .|. controlMask, xK_k), safeSpawn ("amixer") ["-q","set","Master","playback","4+db"]),
     ((modMask .|. controlMask, xK_j), safeSpawn ("amixer") ["-q","set","Master","playback","4-db"]),
 
-    ((modMask, xK_d), safeSpawn ("dmnt") ["-dn"]),
-    ((modMask .|. shiftMask, xK_d), safeSpawn ("dmnt") ["-dnu"]),
+    ((modMask, xK_i), safeSpawn ("dmnt") ["-dn"]),
+    ((modMask .|. shiftMask, xK_i), safeSpawn ("dmnt") ["-dnu"]),
 
     ((modMask, xK_u), safeSpawn ("dmnt") ["-n"]),
     ((modMask .|. shiftMask, xK_u), safeSpawn ("dmnt") ["-nu"]),
 
     ((modMask, xK_m), safeSpawn ("dmpd") []),
+    ((modMask, xK_y), safeSpawn ("dtmx") []),
 
     ((modMask .|. shiftMask, xK_p), safeSpawn ("scrot") ["-e","mv $f ~/etc/scrot/"]),
 
@@ -133,7 +134,6 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
  
- 
 customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
                        ppHidden  = filterScratchPad,
                        ppVisible = xmobarColor "#81C1C1" "",
@@ -147,6 +147,19 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
 
 startupHook' = do
     safeSpawn ("/home/vehk/.xmonad/startup") []
+
+
+tabconfig = defaultTheme {
+    inactiveColor = "#121112",
+    inactiveBorderColor = "#282828",
+    inactiveTextColor = "#AFAF87",
+    activeTextColor = "#D0CFD0",
+    activeColor = "#202020",
+    urgentTextColor = "#D7005F",
+    urgentColor = "#121112",
+    urgentBorderColor = "#D74083",
+    fontName = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
+    }
 
 main = do
   xmproc  <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"

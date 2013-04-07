@@ -8,7 +8,7 @@ ao = alsa
 vo = xv
 
 # cache
-cache = 8912
+# cache = 8912
 
 # software volume
 softvol = 1

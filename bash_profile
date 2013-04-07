@@ -4,7 +4,7 @@
 
 # User specific aliases and functions
 PATH="$HOME/bin:$PATH"
-FIGNORE=$FIGNORE:.o:.class
+FIGNORE=$FIGNORE:.o:.class:.hi
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 [[ -f ~/.profile ]] && . ~/.profile
