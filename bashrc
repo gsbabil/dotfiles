@@ -30,7 +30,7 @@ eval $(dircolors -b ~/.dircolors)
 HISTSIZE=9000
 HISTFILESIZE=$HISTSIZE
 HISTCONTROL=ignorespace:ignoredups
-HISTIGNORE="cd:clear:exit:ls:ll:la:hb *:pwsafe *:pw *"
+HISTIGNORE="cd:clear:exit:ls:ll:la:hb *:pwsafe *:pw *:up *:p *"
 
 # reedit a history substitution line if it failed
 shopt -s histreedit
@@ -71,7 +71,6 @@ alias du='du -hs'
 alias ..="cd .."
 
 alias rss="newsbeuter"
-alias pacman="pacman-color"
 alias less="/usr/share/vim/vim73/macros/less.sh"
 alias pw="pwsafe"
 alias Man="/usr/bin/man"
@@ -80,8 +79,20 @@ alias pactree="pactree -c"
 alias pacdeps="pactree -r"
 alias lock='i3lock -c000000'
 alias rsync='rsync -avhP'
-alias iv='sxiv'
 alias sxiv='sxiv -dg +24+12'
+
+# for the lazy
+alias v='vim'
+alias r='ranger'
+alias c='clear'
+alias s='rsync'
+alias x='aunpack'
+alias p='pw -p'
+alias up='pw -up'
+alias i='sxiv'
+alias L='Less'
+alias m='man'
+alias M='Man'
 
 if [ $UID -ne 0 ]; then
     alias sudo='sudo '
