@@ -5,8 +5,8 @@ Config {
     position = Top,
     lowerOnStart = True,
     commands = [ 
-        Run DynNetwork ["-t", "<fc=#387BAB><rx>kb/s</fc> <fc=#005F87><tx>kb/s</fc>"] 15,
-        Run Date "%a %y-%m-%d %H:%M:%S %Z [%z] " "date" 10,
+        Run DynNetwork ["-t", "<dev> <fc=#387BAB><rx>kb/s</fc> <fc=#005F87><tx>kb/s</fc>", "-w", "4"] 15,
+        Run Date "%a %m-%d %H:%M:%S " "date" 10,
         Run Com "/usr/bin/cut" ["-d ' ' -f1-3 /proc/loadavg"] "load" 50,
         Run BatteryP ["BAT0"] [
                 "-t", "<acstatus><left>", "-S", "True",

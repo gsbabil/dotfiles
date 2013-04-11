@@ -36,7 +36,8 @@ map gms :panorama stash
 map gmS :panorama stash! 
 map gml :panorama list<CR>
 
-command -nargs=0 yt :execute "!yt -c " + content.location.href + " &"
+command -nargs=0 yt :execute "!yt -q " + content.location.href + " &>/dev/null & "
+map <Leader>y :yt<CR>
 
 source! /home/vehk/.vimperatorrc.local
 
