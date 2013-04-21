@@ -6,6 +6,5 @@ if [[ $? -eq 1 ]]; then
     tmux new-session -d -s irc
 
     tmux new-window -t irc:0 -k -n 'irc' 'weechat-curses'
-    tmux new-window -t irc:1 -k -n 'Indoril' '~/dev/haskell/indoril/Indoril -c "#kitinfo"'
-    tmux new-window -t irc:2 -k -c '/var/log/weechat/' -n 'logs' 'vim -c NERDTree'
+    tmux new-window -t irc:1 -k -c '/var/log/weechat/' -n 'logs' 'vim -c NERDTree'
 fi

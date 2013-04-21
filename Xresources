@@ -7,9 +7,9 @@ URxvt.font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
 URxvt.boldFont:-*-terminus-bold-*-*-*-16-*-*-*-*-*-iso8859-*
 URxvt*scrollBar: false
 URxvt.termName: rxvt-256color
-URxvt.shading: 10
-! URxvt.depth: 32
-! URxvt.background: [90]#121112
+! URxvt.shading: 10
+URxvt.depth: 32
+URxvt.background: [90]#121112
 
 ! set up extensions
 URxvt.perl-ext: default,url-select,clipboard,keyboard-select
