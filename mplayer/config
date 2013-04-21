@@ -1,11 +1,9 @@
-# Take screenshots
-vf = screenshot
-
 # Alsa audio output
 ao = alsa
 
 # Standard xv video output
-vo = xv
+vo=vdpau,xv,
+vc=ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffh264vdpau,ffodivxvdpau,
 
 # cache
 # cache = 8912
