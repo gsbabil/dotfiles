@@ -5,9 +5,6 @@ ao = alsa
 vo=vdpau,xv,
 vc=ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffh264vdpau,ffodivxvdpau,
 
-# cache
-# cache = 8912
-
 # software volume
 softvol = 1
 softvol-max = 400
