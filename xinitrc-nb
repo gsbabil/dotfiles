@@ -22,8 +22,7 @@ xmodmap .Xmodmap
 # load .Xresources
 xrdb -merge .Xresources
 
-# load unclutter
-# unclutter &
+compton -b
 
 # screen powersave
 xset +dpms
