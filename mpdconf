@@ -36,5 +36,3 @@ samplerate_converter "1"
 # MPD normalization options
 replaygain "auto"
 replaygain_preamp "6"
-
-bind_to_address "localhost"

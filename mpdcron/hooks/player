@@ -1,11 +1,9 @@
 # vim: set ft=sh:
-if [[ "$MPD_STATUS_STATE" = play ]]; then
-    mpdnotify
-    echo "<fc=#387BAB>$MPD_SONG_TAG_ARTIST<fc=#4F3F3F> - </fc>$MPD_SONG_TAG_TITLE</fc>" > ~/.mpdcron/pipes/pipe_player
-fi
-
-if [[ "$MPD_STATUS_STATE" = stop ]]; then
-    # clear line
-    echo "" > ~/.mpdcron/pipes/pipe_player
-fi
-
+case $MPD_STATUS_STATE in
+    play)
+        mpdnotify
+        echo "<fc=#387BAB>$MPD_SONG_TAG_ARTIST<fc=#4F3F3F> - </fc>$MPD_SONG_TAG_TITLE</fc>" > ~/.mpdcron/pipes/pipe_player
+        ;;
+    stop)
+        echo "" > ~/.mpdcron/pipes/pipe_player
+esac
