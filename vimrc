@@ -105,6 +105,7 @@ if has('autocmd')
 
     " mail-specific settings
     autocmd FileType mail set noautoindent
+    autocmd FileType mail 9
 endif
 
 " keybinds

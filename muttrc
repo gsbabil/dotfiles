@@ -125,6 +125,8 @@ set sleep_time = 0
 set pager_stop = yes
 set smart_wrap = yes
 
+set edit_headers
+
 #Sort received messages by last date
 set sort_aux = 'last-date-received'
 
