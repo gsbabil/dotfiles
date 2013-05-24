@@ -1,0 +1,15 @@
+auto-reload "yes"
+browser "firefox %u"
+notify-beep "yes"
+refresh-on-startup "yes"
+keep-articles-days 14
+max-items 100
+reload-threads 3
+
+color info default blue
+color listfocus default blue
+
+bind-key j next
+bind-key k prev
+bind-key l open
+bind-key L toggle-show-read-feeds

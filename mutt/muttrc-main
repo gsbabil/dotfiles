@@ -1,0 +1,7 @@
+#load shared config
+source ~/.mutt/muttrc-shared
+
+#load account settings etc.
+source ~/.mutt/accountrc-main
+
+macro index go "<change-folder>=sent<enter>" "Go to outbox (sent mails)"

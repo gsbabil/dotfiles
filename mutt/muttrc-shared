@@ -1,6 +1,3 @@
-#load account settings etc.
-source ~/.mutt/accountrc
-
 #load gpg settings
 source ~/.mutt/gpg.rc
 
@@ -15,7 +12,6 @@ macro index gg "<home>"
 macro index G "<end>"
 
 macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
-macro index go "<change-folder>=[Google Mail]/Sent Mail<enter>" "Go to outbox (sent mails)"
 macro generic,index,pager \ca "<shell-escape>abook<return>" "Launch abook"
 macro index,pager A "<pipe-message>abook --add-email<return>" "Add the sender address to abook"
 
@@ -93,7 +89,7 @@ set uncollapse_jump=yes
 #index format
 #default :"%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
 #this one also shows the number of messages in a collapsed thread
-set index_format="%4C %Z %{%b %d %H:%M} %-20.20L %?M?(#%03M)&(%4l)? %s"
+set index_format="%4C %Z %{%b %d %H:%M} %-20.20L %?M?(#%04M)&(%5l)? %s"
 
 #setting up aliases and abook support
 set alias_file=~/.mutt/aliases
