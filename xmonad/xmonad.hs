@@ -34,9 +34,6 @@ manageHook' = composeOne [
     (className =? "Firefox" <&&> resource =? "Download") -?> doShift "8:dl",
     className  =? "Firefox"                              -?> doShift "2:web",
 
-    className  =? "Sxiv"     -?> doFloat,
-    className  =? "mplayer2" -?> doFloat,
-
     (className =? "URxvt" <&&> resource =? "irc") -?> doShift "3:irc",
     (className =? "URxvt" <&&> resource =? "hub") -?> doShift "1:hub",
 
@@ -136,7 +133,7 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
                        ppVisible = xmobarColor "#81C1C1" "",
                        ppUrgent  = xmobarColor "#D7005F" "" . wrap "[" "]",
                        ppLayout  = xmobarColor "#AE81FF" "",
-                       ppTitle   = xmobarColor "#D0CFD0" "" . shorten 100,
+                       ppTitle   = \s -> "",
                        ppSep     = xmobarColor "#3F3F3F" "" " | "
                      }
                      where
@@ -144,7 +141,6 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
 
 startupHook' = do
     safeSpawn ("/home/vehk/.xmonad/startup") []
-
 
 tabconfig = defaultTheme {
     inactiveColor = "#121112",

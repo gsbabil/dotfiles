@@ -23,6 +23,8 @@ regular_expressions = "extended"
 
 ignore_leading_the = "yes"
 
+execute_on_song_change = "mpdnotify"
+
 mouse_support = "no"
 
 empty_tag_marker = "<>"
@@ -42,8 +44,8 @@ main_window_color = "default"
 main_window_highlight_color = "yellow"
 active_column_color = "red"
 
-now_playing_prefix = "» "
-now_playing_suffix = ""
+now_playing_prefix = "$b» "
+now_playing_suffix = "$/b"
 
 autocenter_mode = "yes"
 centered_cursor = "yes"
