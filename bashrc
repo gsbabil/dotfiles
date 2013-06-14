@@ -11,7 +11,7 @@ _ranger_string() {
     echo "${RANGER_LEVEL:+:r$RANGER_LEVEL}"
 }
 
-if [ -n "$SSH_CLIENT" ]; then
+if [ -n "$SSH_CLIENT" ] && [ -z "$TMUX" ]; then
     if [[ "$TERM" =~ "256color" ]]; then
         PS1='[\e[0;33m\]\u@\h$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
     else
@@ -133,3 +133,4 @@ wake() {
 
     sudo rtcwake -t $unixd -m mem
 }
+
