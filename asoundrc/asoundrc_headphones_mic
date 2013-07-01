@@ -1,0 +1,74 @@
+defaults.pcm.rate_converter "samplerate_best"
+
+pcm.!default {
+    type asym
+
+    playback.pcm {
+        type plug
+        slave.pcm "bs2b"
+    }
+
+    capture.pcm {
+        type softvol
+        slave.pcm "hw:0,0"
+        control.name "Mic"
+        control.card 0
+        max_dB 30.0
+    }
+
+}
+pcm.dmix0 {
+    type dmix
+    ipc_key 1024
+    ipc_perm 0666
+    slave {
+        pcm {
+            type hw
+            card 0
+            device 0
+        }
+        period_time 0
+        #period_size 1024
+        buffer_size 65536
+        format "S32_LE"
+        periods 128
+        rate 96000
+    }
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmix0"
+
+    control {
+        name "Master"
+        card 0
+    }
+
+    min_dB -45.0
+    max_dB 5.0
+}
+
+pcm.headphonesplug {
+    type plug
+    slave.pcm "softvol"
+}
+
+pcm.bs2b {
+    type ladspa
+        slave.pcm "headphonesplug"
+        path "/usr/lib/ladspa"
+        plugins [
+        {
+            label bs2b
+                input {
+                    controls [ 700 4.5 ]
+                }
+        }
+    ]
+}
+
+pcm.headphones {
+    type plug
+    slave.pcm "bs2b"
+}

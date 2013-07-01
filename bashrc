@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+source /usr/share/git/completion/git-prompt.sh
+
 PROMPT_DIRTRIM=2
 
 _ranger_string() {
@@ -13,15 +15,15 @@ _ranger_string() {
 
 if [ -n "$SSH_CLIENT" ] && [ -z "$TMUX" ]; then
     if [[ "$TERM" =~ "256color" ]]; then
-        PS1='[\e[0;33m\]\u@\h$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
+        PS1='[\e[0;33m\]\u@\h$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\[\e[0;34m\]$(__git_ps1 " (%s)")\[\e[0m\]\$ '
     else
-        PS1='[\u@\h$(_ranger_string) \w]\$ '
+        PS1='[\u@\h$(_ranger_string) \w]$(__git_ps1 " (%s)")\$ '
     fi
 else
     if [[ "$TERM" =~ "256color" ]]; then
-        PS1='[\u$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\$ '
+        PS1='[\u$(_ranger_string) \[\e[0;32m\]\w\[\e[0m\]]\[\e[0;34m\]$(__git_ps1 " (%s)")\[\e[0m\]\$ '
     else
-        PS1='[\u$(_ranger_string) \w]\$ '
+        PS1='[\u$(_ranger_string) \w]$(__git_ps1 " (%s)")\$ '
     fi
 fi
 
@@ -45,6 +47,8 @@ export SDL_AUDIODRIVER=alsa
 export SDL_VIDEO_FULLSCREEN_HEAD=1
 export EDITOR=vim
 export TERMCMD=urxvtc
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM="auto"
 set -o vi
 
 shopt -s autocd             # change to named directory
@@ -117,7 +121,7 @@ man() {
 
 # eval keychain
 sshchain() {
-    eval $(keychain --eval --agents ssh -Q --quiet id_ecdsa id_rsa)
+    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 }
 
 # sprunge pastebin service
