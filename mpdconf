@@ -15,7 +15,7 @@ auto_update "yes"
 audio_output {
     type "alsa"
     name "ALSA"
-    format "96000:16:2"
+    format "48000:16:2"
     mixer_control "Master"
     auto_format "yes"
     auto_resample "yes"

@@ -1,0 +1,17 @@
+# vim: set ft=conf:
+
+directory = ~/torrents/
+session = ~/torrents/.session
+
+schedule = watch_directory,5,5,load_start=~/torrents/.watch/*.torrent
+schedule = untied_directory,5,5,stop_untied=
+schedule = low_diskspace,5,60,close_low_diskspace=100M
+
+port_range = 49164-49164
+
+encryption = allow_incoming,enable_retry,require
+
+dht = auto
+dht_port = 6881
+
+peer_exchange = yes
