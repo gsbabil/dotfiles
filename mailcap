@@ -1,8 +1,6 @@
-#text/html; elinks -dump -dump-charset %{charset} -default-mime-type text/html %s; needsterminal; copiousoutput;
-text/html; w3m -dump -I %{charset} -T text/html %s; needsterminal; copiousoutput;
-image/gif; gifview -a %s
+text/html; elinks -dump -dump-charset %{charset} -default-mime-type text/html %s; needsterminal; copiousoutput;
 image/*; sxiv -q %s
 application/pdf; zathura %s
 application/msword; antiword %s; copiousoutput
-audio/*; mplayer %s
-video/*; mplayer %s
+audio/*; mpv %s
+video/*; mpv %s

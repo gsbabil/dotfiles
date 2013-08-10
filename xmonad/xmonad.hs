@@ -37,9 +37,17 @@ manageHook' = composeOne [
     (className =? "URxvt" <&&> resource =? "irc") -?> doShift "3:irc",
     (className =? "URxvt" <&&> resource =? "hub") -?> doShift "1:hub",
 
+    -- Make floating windows pop up in front of other windows.
+    isDialog -?> doF avoidMaster,
+
     -- Any other window will be swapped down
     return True -?> doF W.swapDown
     ]
+
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+     W.Stack t [] (r:rs) ->  W.Stack t [r] rs
+     otherwise           -> c
 
 layout' = onWorkspace "9:vid" (full ||| tab) $ tile ||| mtile ||| grid ||| tab ||| full
     where
