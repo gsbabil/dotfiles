@@ -1,0 +1,11 @@
+#!/bin/bash
+
+tmux has-session -t hub
+
+if [[ $? -eq 1 ]]; then
+    tmux new-session -d -s hub
+
+    tmux new-window -t hub:0 -k -n 'rtorrent' 'rtorrent'
+
+    tmux select-window -t hub:0
+fi

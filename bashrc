@@ -75,7 +75,7 @@ alias du='du -hs'
 alias ..="cd .."
 
 alias rss="newsbeuter"
-alias less="/usr/share/vim/vim73/macros/less.sh"
+alias less="/usr/share/vim/vim74/macros/less.sh"
 alias pw="pwsafe"
 alias Man="/usr/bin/man"
 alias Less="/usr/bin/less"

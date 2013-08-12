@@ -11,7 +11,7 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 "set up man plugin
-source /usr/share/vim/vim73/ftplugin/man.vim
+source /usr/share/vim/vim74/ftplugin/man.vim
 
 "viminfo
 set viminfo='50,\"100,:100,n~/.vim/.viminfo

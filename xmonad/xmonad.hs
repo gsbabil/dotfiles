@@ -25,17 +25,19 @@ import qualified Data.Map        as M
 terminal' = "/usr/bin/urxvtc"
 dmenu = "dmenu_run -i -fn '-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*' -p 'Run:'"
 
-workspaces' = ["1:hub","2:web","3:irc","4:src"] ++ map show [5..7] ++ ["8:dl","9:vid"]
+workspaces' = ["1:hub","2:web","3:irc","4:src","5:ssh","6:rt","7:dl","8:fs","9:fs"]
  
 manageHook' = composeOne [ 
     isFullscreen -?> doFullFloat,
 
-    (className =? "Firefox" <&&> resource =? "DTA")      -?> doShift "8:dl",
-    (className =? "Firefox" <&&> resource =? "Download") -?> doShift "8:dl",
+    (className =? "Firefox" <&&> resource =? "DTA")      -?> doShift "7:dl",
+    (className =? "Firefox" <&&> resource =? "Download") -?> doShift "7:dl",
     className  =? "Firefox"                              -?> doShift "2:web",
 
     (className =? "URxvt" <&&> resource =? "irc") -?> doShift "3:irc",
     (className =? "URxvt" <&&> resource =? "hub") -?> doShift "1:hub",
+    (className =? "URxvt" <&&> resource =? "ssh") -?> doShift "5:ssh",
+    (className =? "URxvt" <&&> resource =? "rt") -?> doShift "6:rt",
 
     -- Make floating windows pop up in front of other windows.
     isDialog -?> doF avoidMaster,
@@ -49,7 +51,7 @@ avoidMaster = W.modify' $ \c -> case c of
      W.Stack t [] (r:rs) ->  W.Stack t [r] rs
      otherwise           -> c
 
-layout' = onWorkspace "9:vid" (full ||| tab) $ tile ||| mtile ||| grid ||| tab ||| full
+layout' = onWorkspaces ["8:fs","9:fs"] (full ||| tab) $ tile ||| mtile ||| grid ||| tab ||| full
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
         tile  = renamed [Replace "[]="]  $ smartBorders rt

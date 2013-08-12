@@ -22,7 +22,7 @@ xmodmap .Xmodmap
 # load .Xresources
 xrdb -merge .Xresources
 
-compton -b
+compton -b --backend glx
 
 # screen powersave
 xset +dpms
