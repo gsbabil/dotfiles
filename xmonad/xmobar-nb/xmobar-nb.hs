@@ -15,6 +15,7 @@ Config {
                 "--", "-O", "+", "-o", "-", "-f", "BAT0/subsystem/ADP0/online"
             ] 600,
         Run StdinReader,
+        Run Kbd [("us(altgr-intl)", "US"), ("gb_de", "GB")],
         Run Memory ["-p", "2", "-c", "0", "-S", "True",
                  "-H", "80", "-h", "#D7005F", "-L", "50", "-l", "#87FF00", "-n", "#FF8700",
                  "-t", "RAM: <usedratio>"] 50,
@@ -26,5 +27,5 @@ Config {
               ( 30, False, "/home/vehk/.mpdcron/pipes/pipe_mixer"  )
             ]
     ],
-    template = " %StdinReader% <fc=#3F3F3F>| <fc=#D0CFD0>%mpd%</fc></fc> }{ <fc=#3F3F3F>%dynnetwork%</fc><fc=#3F3F3F> | %memory% | %cpu% | <fc=#B973FF>%load%</fc> | %battery%</fc><fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
+    template = " %StdinReader% <fc=#3F3F3F>| <fc=#D0CFD0>%mpd%</fc></fc> }{ <fc=#3F3F3F>%dynnetwork%</fc><fc=#3F3F3F> | KEY: <fc=#87FF00>%kbd%</fc> | %memory% | %cpu% | <fc=#B973FF>%load%</fc> | %battery%</fc><fc=#3F3F3F> | </fc><fc=#D0CFD0>%date%</fc>"
 }

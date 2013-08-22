@@ -9,7 +9,6 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Grid
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
@@ -39,7 +38,7 @@ manageHook' = composeOne [
     (className =? "URxvt" <&&> resource =? "ssh") -?> doShift "5:ssh",
     (className =? "URxvt" <&&> resource =? "rt") -?> doShift "6:rt",
 
-    -- Make floating windows pop up in front of other windows.
+    -- Avoid the master window but otherwise manage new windows normally
     isDialog -?> doF avoidMaster,
 
     -- Any other window will be swapped down
@@ -51,13 +50,11 @@ avoidMaster = W.modify' $ \c -> case c of
      W.Stack t [] (r:rs) ->  W.Stack t [r] rs
      otherwise           -> c
 
-layout' = onWorkspaces ["8:fs","9:fs"] (full ||| tab) $ tile ||| mtile ||| grid ||| tab ||| full
+layout' = onWorkspace "2:web" (tile ||| tab ||| full) $ full ||| tile ||| tab
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
         tile  = renamed [Replace "[]="]  $ smartBorders rt
-        mtile = renamed [Replace "M[]="] $ smartBorders $ Mirror rt
         full  = renamed [Replace "[]"]   $ noBorders Full
-        grid  = renamed [Replace "[+]"]  $ smartBorders $ Grid
         tab   = renamed [Replace "[T]"]  $ tabbedBottom shrinkText tabconfig
 
 normalBorderColor'          = "#282828"
@@ -74,7 +71,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ((modMask, xK_Return), safeSpawn (XMonad.terminal conf) []),
 
     ((modMask, xK_o), scratchpadSpawnAction conf),
-    ((modMask .|. shiftMask, xK_o), toggleOrView "NSP"),
+    ((modMask, xK_0), toggleOrView "NSP"),
 
     ((modMask .|. controlMask, xK_l), safeSpawn ("i3lock") ["-c","000000"]),
     ((modMask, xK_p), spawn dmenu),

@@ -14,7 +14,7 @@ fi
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # load gb keymap
-setxkbmap gb_de
+setxkbmap us,gb_de -variant altgr-intl, -option grp:menu_toggle
 
 # load key bindings
 xmodmap .Xmodmap
@@ -22,7 +22,7 @@ xmodmap .Xmodmap
 # load .Xresources
 xrdb -merge .Xresources
 
-compton -b --backend glx
+compton -b
 
 # screen powersave
 xset +dpms
