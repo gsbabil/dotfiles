@@ -14,6 +14,7 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
 import XMonad.Actions.CycleWS
+import XMonad.Actions.PhysicalScreens
 import XMonad.Util.Scratchpad
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
@@ -129,22 +130,22 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (f, m) <- [(W.shift, shiftMask)]]
   ++
 
+  --
   -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
   -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  --
+  [((modMask .|. mask, key), f sc)
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+      , (f, mask) <- [(viewScreen, 0), (sendToScreen, shiftMask)]]
  
 customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
-                       ppHidden  = filterScratchPad,
-                       ppVisible = xmobarColor "#81C1C1" "",
+                       ppHidden  = \x -> if x == "NSP" then "" else x,
+                       ppVisible = xmobarColor "#D0CFD0" "" . wrap "(" ")",
                        ppUrgent  = xmobarColor "#D7005F" "" . wrap "[" "]",
                        ppLayout  = xmobarColor "#AE81FF" "",
                        ppTitle   = \s -> "",
                        ppSep     = xmobarColor "#3F3F3F" "" " | "
                      }
-                     where
-                        filterScratchPad ws = if ws == "NSP" then "" else ws
 
 startupHook' = do
     safeSpawn ("/home/vehk/.xmonad/startup") []
