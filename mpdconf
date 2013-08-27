@@ -21,15 +21,6 @@ audio_output {
     auto_resample "yes"
 }
 
-audio_output {
-    type "httpd"
-    name "HTTP Stream"
-    host "localhost"
-    encoder "flac"
-    port "8000"
-    format "96000:16:2"
-}
-
 # General audio options
 samplerate_converter "1"
 
