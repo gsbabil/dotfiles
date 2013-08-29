@@ -123,18 +123,3 @@ man() {
 sshchain() {
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 }
-
-# sprunge pastebin service
-sprunge() {
-    curl -F 'sprunge=<-' http://sprunge.us
-}
-
-# small rtcwake wrapper
-wake() {
-    [[ $# -lt 1 ]] && echo "No wake up date given." && return
-    date="$@"
-    unixd=$(date -d "$date" +%s) || return
-
-    sudo rtcwake -t $unixd -m mem
-}
-
