@@ -159,6 +159,7 @@ tabconfig = defaultTheme {
     urgentTextColor = "#D7005F",
     urgentColor = "#121112",
     urgentBorderColor = "#D74083",
+    decoHeight = 16,
     fontName = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
     }
 

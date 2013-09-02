@@ -1,0 +1,17 @@
+# Contributor: Wolfgang Mueller <vehk@kindofautomatic.de>
+pkgname=sex
+pkgver=1.0
+pkgrel=3
+pkgdesc="Spouts silly mad-lib-style porn-like text"
+url="http://spatula.net/software/sex/"
+license="Unknown"
+depends=()
+arch=('any') 
+makedepends=('gcc')
+source=(http://dl.vehk.de/b/sex.tar.bz2)
+md5sums=('1173245490a0a225766bc312a4600bd4')
+
+package() {
+  cd $srcdir
+  make DESTDIR="$pkgdir/" PREFIX="/usr" install
+}

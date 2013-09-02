@@ -1,0 +1,95 @@
+# Maintainer: Wolfgang Mueller <adahn@kindofautomatic.de>
+# vim:set ft=sh:
+
+pkgname=vim-icarus
+_realname=vim
+pkgver=4249
+pkgrel=1
+pkgdesc="A private hg build of vim with perl and python but without gui."
+arch=('i686' 'x86_64')
+url="http://www.vim.org/"
+license=('custom:vim')
+makedepends=('mercurial' 'libxt' 'gpm' 'perl' 'python2')
+optdepends=('gawk: needed for certain scripts')
+conflicts=('vim' 'vim-runtime')
+provides=('vim', 'vim-runtime')
+source=()
+md5sums=()
+
+_hgroot="https://vim.googlecode.com/hg/"
+_hgrepo="vim"
+_hgbranch="default"
+
+fetch() {
+	cd "$srcdir"
+	
+	if [[ -d "$_hgrepo" ]]; then
+		msg "Existing clone found, updating..."
+		cd "$_hgrepo" && hg pull && hg update
+		msg "Local files are up to date."
+	else
+		msg "Cloning repository (this might take a long time)..."
+		hg clone "$_hgroot" "$_hgrepo"
+	fi
+}	
+
+build() {
+
+	fetch
+
+	# cd into build directory
+	cd "$srcdir/$_hgrepo"
+
+    # vim wants python2
+	sed -i -e 's|vi_cv_path_python, python)|vi_cv_path_python, python2)|' src/configure.in
+
+	# autoconf
+	(cd src/ && autoconf)
+
+	# run configuration
+	msg "Configuring $_realname..."
+	./configure --prefix=/usr --localstatedir=/var/lib/vim --mandir=/usr/share/man \
+		--with-features=big --disable-gui --disable-netbeans \
+		--with-x=auto --with-global-runtime=/usr/share/vim --disable-python3interp \
+		--disable-rubyinterp --disable-luainterp --disable-gpm \
+		--enable-perlinterp --enable-pythoninterp  --enable-cscope --enable-multibyte || return 1
+
+	# make
+	msg "Making $_realname..."
+	make || return 1
+
+}
+
+package() {
+
+    cd "$srcdir/$_hgrepo"
+
+	make DESTDIR="$pkgdir/" VIMRCLOC="/etc" install || return 1
+
+	# remove unnecessary binaries
+	cd "$pkgdir/usr/bin"
+	rm -f ex view rview xxd
+
+	# and their manpages
+	cd ${pkgdir}/usr/share/man
+	for i in ex view evim xxd; do
+		rm -f {*/,}man1/$i.1
+	done
+
+	# also remove manpages that are not english (or german)
+	for i in fr* it* pl* ru*; do
+		rm -rf "$i"
+	done
+
+	# add specific arch stuff
+	cd $pkgdir/usr/share/vim/vim74/
+	sed -i "s/rpmsave/pacsave/;s/rpmnew/pacnew/;s/,\*\.ebuild/\0,PKGBUILD*,*.install/" filetype.vim
+
+	# fix FS#17216
+	sed -i 's|messages,/var|messages,/var/log/messages.log,/var|' \
+		${pkgdir}/usr/share/vim/vim74/filetype.vim
+
+	# license
+	install -Dm644 ${srcdir}/vim/runtime/doc/uganda.txt\
+		${pkgdir}/usr/share/licenses/${_realname}/license.txt
+}
