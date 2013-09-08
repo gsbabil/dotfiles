@@ -56,11 +56,12 @@ avoidMaster = W.modify' $ \c -> case c of
      W.Stack t [] (r:rs) ->  W.Stack t [r] rs
      otherwise           -> c
 
-layout' = onWorkspace "2:web" (tile ||| tab ||| full) $ full ||| tile ||| tab
+layout' = avoidStrutsOn [U] (full ||| tile ||| tab) ||| full'
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
         tile  = renamed [Replace "[]="]  $ smartBorders rt
         full  = renamed [Replace "[]"]   $ noBorders Full
+        full' = renamed [Replace "[]F"]  $ noBorders Full
         tab   = renamed [Replace "[T]"]  $ tabbedBottom shrinkText tabconfig
 
 normalBorderColor'          = "#282828"
@@ -215,7 +216,7 @@ defaults = defaultConfig {
     keys               = keys',
  
     -- hooks, layouts
-    layoutHook         = smartBorders $ avoidStruts $ layout',
+    layoutHook         = smartBorders $ layout',
     manageHook         = manageHook',
     startupHook        = startupHook'
 }
