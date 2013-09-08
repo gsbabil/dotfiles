@@ -16,11 +16,16 @@ import XMonad.Layout.ResizableTile
 import XMonad.Actions.CycleWS
 import XMonad.Actions.PhysicalScreens
 import XMonad.Util.Scratchpad
+import XMonad.Prompt
+import XMonad.Prompt.Window
+import XMonad.Prompt.XMonad
+import XMonad.Prompt.RunOrRaise
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.Hooks.EwmhDesktops as E
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import Data.List (isInfixOf)
 
 terminal' = "/usr/bin/urxvtc"
 dmenu = "dmenu_run -i -fn '-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*' -p 'Run:'"
@@ -88,6 +93,10 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     ((modMask, xK_m), safeSpawn ("dmpd") []),
     ((modMask, xK_y), safeSpawn ("dtmx") []),
+
+    ((modMask, xK_g), windowPromptGoto promptConfig),
+    ((modMask, xK_b), windowPromptBring promptConfig),
+    ((modMask, xK_x), xmonadPrompt promptConfig),
 
     ((modMask .|. shiftMask, xK_p), safeSpawn ("scrot") ["-e","mv $f ~/etc/scrot/"]),
 
@@ -162,6 +171,19 @@ tabconfig = defaultTheme {
     decoHeight = 16,
     fontName = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
     }
+
+promptConfig = defaultXPConfig {
+    font     = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*",
+    bgColor  = "#121112",
+    promptBorderWidth = 0,
+    fgColor  = "#D0CFD0",
+    fgHLight = "#D7005F",
+    bgHLight = "#121112",
+    position = Top,
+    searchPredicate = isInfixOf,
+    showCompletionOnTab = True,
+    alwaysHighlight = True
+}
 
 main = do
   xmproc  <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
