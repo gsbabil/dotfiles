@@ -18,5 +18,9 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'dag/vim2hs'
+Bundle 'Shougo/neocomplete.vim'
+Bundle 'Shougo/vimproc'
+Bundle 'eagletmt/ghcmod-vim'
+
 
 filetype plugin indent on

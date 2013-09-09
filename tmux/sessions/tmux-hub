@@ -10,7 +10,6 @@ if [[ $? -eq 1 ]]; then
     tmux select-pane -l
     tmux new-window -t hub:1 -n 'mutt' 'bash -ic mutt'
     tmux new-window -t hub:2 -n 'news' 'newsbeuter'
-    tmux split-window -v -l 10 -t hub:2 'ttytter'
     tmux new-window -t hub:3 -n 'ps' 'htop'
     tmux new-window -t hub:4
 

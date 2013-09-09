@@ -51,7 +51,7 @@ build() {
 	./configure --prefix=/usr --localstatedir=/var/lib/vim --mandir=/usr/share/man \
 		--with-features=big --disable-gui --disable-netbeans \
 		--with-x=auto --with-global-runtime=/usr/share/vim --disable-python3interp \
-		--disable-rubyinterp --disable-luainterp --disable-gpm \
+		--disable-rubyinterp --enable-luainterp --disable-gpm \
 		--enable-perlinterp --enable-pythoninterp  --enable-cscope --enable-multibyte || return 1
 
 	# make
