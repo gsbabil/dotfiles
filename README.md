@@ -6,4 +6,4 @@ Here be dragons.
 
 sample
 ======
-![XMonad 'Molokai' config](http://dl.vehk.de/desk.png "molokai")
+[desktop screenshot](http://dl.vehk.de/molokai.png)
