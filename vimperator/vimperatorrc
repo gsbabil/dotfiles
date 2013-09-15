@@ -6,16 +6,20 @@ nnoremap h 2h
 nnoremap j 2j
 nnoremap k 2k
 nnoremap l 2l
+nnoremap > :tabnext<CR>
+nnoremap < :tabNext<CR>
+nnoremap J :jumps<CR>
 nnoremap sc :noscript 
 nnoremap st :noscript toggletemp<CR>
 nnoremap sT :noscript toggleperm
 nnoremap sp :noscript popup<CR>
 nnoremap si :noscript info<CR>
+set gui=none
 set complete=lb
 set defsearch=duck
 set editor="urxvt -e vim"
 set hintchars=abcdefghijklmnopqrstuvwxyz
-set maxitems=10
+set maxitems=15
 set newtab=help,addons,prefs
 set noscrollbars
 set tabnumbers
