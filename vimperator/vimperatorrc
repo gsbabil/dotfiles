@@ -1,15 +1,11 @@
 "3.4 (created: 2012/04/02 20:07:29)
 
+colorscheme molokai
 highlight Bell display: none;
-highlight Hint font-family: monospace; font-size: 10px; font-weight: bold; color: white; background-color: red; padding: 2px;
 nnoremap h 2h
 nnoremap j 2j
 nnoremap k 2k
 nnoremap l 2l
-nnoremap b :tabnext<CR>
-nnoremap B :tabprev<CR>
-nnoremap gt :buffer! 
-nnoremap gT :buffers
 nnoremap sc :noscript 
 nnoremap st :noscript toggletemp<CR>
 nnoremap sT :noscript toggleperm
