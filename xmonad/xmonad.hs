@@ -8,7 +8,6 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Tabbed
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
@@ -55,13 +54,12 @@ avoidMaster = W.modify' $ \c -> case c of
      W.Stack t [] (r:rs) ->  W.Stack t [r] rs
      otherwise           -> c
 
-layout' = avoidStrutsOn [U] (full ||| tile ||| tab) ||| full'
+layout' = avoidStrutsOn [U] (full ||| tile) ||| full'
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
         tile  = renamed [Replace "[]="]  $ smartBorders rt
         full  = renamed [Replace "[]"]   $ noBorders Full
         full' = renamed [Replace "[]F"]  $ noBorders Full
-        tab   = renamed [Replace "[T]"]  $ tabbedBottom shrinkText tabconfig
 
 normalBorderColor'          = "#282828"
 focusedBorderColor'         = "#D0CFD0"
@@ -158,19 +156,6 @@ customPP = defaultPP { ppCurrent = xmobarColor "#A6E22E" "",
 
 startupHook' = do
     safeSpawn ("/home/vehk/.xmonad/startup") []
-
-tabconfig = defaultTheme {
-    inactiveColor = "#121112",
-    inactiveBorderColor = "#282828",
-    inactiveTextColor = "#AFAF87",
-    activeTextColor = "#D0CFD0",
-    activeColor = "#202020",
-    urgentTextColor = "#D7005F",
-    urgentColor = "#121112",
-    urgentBorderColor = "#D74083",
-    decoHeight = 16,
-    fontName = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*"
-    }
 
 promptConfig = defaultXPConfig {
     font     = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*",

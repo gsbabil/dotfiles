@@ -6,4 +6,5 @@ hi StatusLine -append font-family: Terminus;
 hi InfoMsg -append font-family: Terminus;
 hi ModeMsg -append font-family: Terminus;
 hi WarningMsg -append font-family: Terminus;
+hi MoreMsg -append font-family: Terminus;
 hi Title -append font-family: Terminus;
