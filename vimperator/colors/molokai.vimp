@@ -10,7 +10,7 @@ hi CompTitle>*          color: #D0CFD0; padding: 1px 0.5ex;
 hi CompItem             background:#121112; color:#D0CFD0;
 hi CompItem[selected]   color: #FF9926; background: #262426;
 hi CompDesc             width: 500px; max-width: 500px; color: #465457;
-hi CompMsg              font-style: italic; margin-left: 16px;
+hi CompMsg              margin-left: 16px;
 hi ErrorMsg             background: #D7005F; color: #D0CFD0; font-weight: bold;
 hi Filter               color: #FF8700; background: #262426;
 hi StatusLine           color: #D0CFD0; background: transparent; font-weight: normal;
@@ -24,7 +24,7 @@ hi ModeMsg              color: white; background: #3E6700; border-radius: 1px; p
 hi PromptText           color: white; background: #860EFF;
 hi MoreMsg              background-color: #121112; color: #87FF00;
 hi Tag                  color: #005F87;
-hi InfoMsg              background: #121112; color: #B973FF;
+hi InfoMsg              background: #121112; color: #87FF00;
 hi WarningMsg           background: #121112; color: #D7005F;
 hi Null                 color: #005F87;
 hi Number               color: #005F87;

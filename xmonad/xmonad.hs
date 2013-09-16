@@ -1,6 +1,5 @@
 import System.IO
 import System.Exit
-import Control.Monad (liftM2)
 
 import XMonad
 import XMonad.Hooks.DynamicLog

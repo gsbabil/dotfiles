@@ -1,7 +1,9 @@
 "3.4 (created: 2012/04/02 20:07:29)
 
 colorscheme molokai
-highlight Bell display: none;
+source ~/.vimperator/terminus.vimp
+hi Bell display: none;
+
 nnoremap h 2h
 nnoremap j 2j
 nnoremap k 2k
@@ -14,6 +16,7 @@ nnoremap st :noscript toggletemp<CR>
 nnoremap sT :noscript toggleperm
 nnoremap sp :noscript popup<CR>
 nnoremap si :noscript info<CR>
+
 set gui=none
 set complete=lb
 set defsearch=duck
@@ -27,18 +30,10 @@ set visualbell
 set animations
 
 map S :sanitize!<CR>
-map gma :panorama add 
-map gmA :panorama add! 
-map gmg :panorama switch 
-map gmd :panorama rm 
-map gmD :panorama rm<CR>
-map gms :panorama stash 
-map gmS :panorama stash! 
-map gml :panorama list<CR>
 
 command -nargs=0 yt :execute "!yt -q " + content.location.href + " &>/dev/null & "
 map <Leader>y :yt<CR>
 
-source! /home/vehk/.vimperatorrc.local
+source! ~/.vimperatorrc.local
 
 " vim: set ft=vimperator:

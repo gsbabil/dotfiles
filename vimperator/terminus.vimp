@@ -1,0 +1,9 @@
+hi CmdLine>* -append font-family: Terminus;
+hi CompDesc -append font-family: Terminus;
+hi CompTitle -append font-family: Terminus;
+hi CompItem>* -append font-family: Terminus;
+hi StatusLine -append font-family: Terminus;
+hi InfoMsg -append font-family: Terminus;
+hi ModeMsg -append font-family: Terminus;
+hi WarningMsg -append font-family: Terminus;
+hi Title -append font-family: Terminus;
