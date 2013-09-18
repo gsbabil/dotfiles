@@ -31,3 +31,4 @@ hi Number               color: #005F87;
 hi NonText              color: #B973FF; min-height: 16px; padding-left: 2px;
 hi Title                background-color: #D7005F; color: #D0CFD0; font-weight: bold;
 hi Indicator            color: #D7005F;
+hi ContentSeparator     border-top: 1px solid #262426; display: -moz-box;

@@ -7,7 +7,7 @@ Config {
     commands = [ 
         Run DynNetwork ["-t", "<dev> <fc=#387BAB><rx>kb/s</fc> <fc=#005F87><tx>kb/s</fc>", "-w", "4"] 15,
         Run Date "%a %m-%d %H:%M:%S " "date" 10,
-        Run Com "/usr/bin/cut" ["-d ' ' -f1-3 /proc/loadavg"] "load" 50,
+        Run Com "/usr/bin/cut" ["-d", " ", "-f", "1-3", "/proc/loadavg"] "load" 50,
         Run BatteryP ["BAT0"] [
                 "-t", "<fc=#D0CFD0><acstatus></fc><left>", "-S", "True",
                 "-L", "30", "-H", "70", "-p", "3",
