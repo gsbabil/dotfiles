@@ -21,8 +21,6 @@ xmodmap .Xmodmap
 # load .Xresources
 xrdb -merge .Xresources
 
-compton -b
-
 # activate numpad
 numlockx &
 
