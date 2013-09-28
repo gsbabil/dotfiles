@@ -1,9 +1,10 @@
-" This is vim, not vi
-set nocompatible
+" Startup configuration
+" =====================
 
-" Vundle
+" Load vundle
 source ~/.vundlerc
 
+" Load colors
 if &t_Co > 2 || has("gui_running")
     " Syntax highlighting
     syntax enable
@@ -13,10 +14,18 @@ endif
 "set up man plugin
 source /usr/share/vim/vim74/ftplugin/man.vim
 
+" Misc settings
+" =============
+
 "viminfo
 set viminfo='50,\"100,:100,n~/.vim/.viminfo
+
+" This is vim, not vi
+set nocompatible
+
 set history=1000
 
+" Backups and undo file
 set undofile
 set undodir=~/.vimundo
 set nobackup
@@ -25,9 +34,9 @@ set noswapfile
 
 set ttyfast
 set lazyredraw
-
 set scrolloff=3
 
+" Hide buffers instead of abandoning them
 set hidden
 
 set swb=useopen,usetab
@@ -95,6 +104,9 @@ set wildignore+=*/.git/*,*/.hg/*
 
 let g:haskell_conceal = 0
 
+" Filetype options
+" ================
+
 " autocmd settings
 if has('autocmd')
     " terminal bell (again, for gui)
@@ -108,7 +120,9 @@ if has('autocmd')
     autocmd FileType mail 9
 endif
 
-" keybinds
+" Key bindings
+" ============
+
 " Split windows with vv or ss
 nnoremap <silent> vv <C-w>v
 nnoremap <silent> ss <C-w>s
@@ -118,6 +132,7 @@ map <leader>u :GundoToggle<CR>
 map <leader>p :CtrlP<CR>
 map <leader>h :HLint<CR>
 map <leader>c :NeoCompleteToggle<CR>
+
 au FileType haskell nnoremap <buffer> <leader>t :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <silent> <leader>tc :HdevtoolsClear<CR>
 
@@ -134,6 +149,9 @@ vnoremap <up> <nop>
 vnoremap <down> <nop>
 vnoremap <left> <nop>
 vnoremap <right> <nop>
+
+" Plugin settings
+" ===============
 
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
