@@ -2,6 +2,7 @@
 case $MPD_STATUS_STATE in
     play)
         echo "<fc=#387BAB>$MPD_SONG_TAG_ARTIST<fc=#4F3F3F> - </fc>$MPD_SONG_TAG_TITLE</fc>" > ~/.mpdcron/pipes/pipe_player
+        mpdnotify
         ;;
     stop)
         echo "" > ~/.mpdcron/pipes/pipe_player

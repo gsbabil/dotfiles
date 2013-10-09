@@ -13,7 +13,7 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
 import XMonad.Actions.CycleWS
 import XMonad.Actions.PhysicalScreens
-import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
 import XMonad.Prompt
 import XMonad.Prompt.Window
 import XMonad.Prompt.XMonad
@@ -54,6 +54,13 @@ avoidMaster = W.modify' $ \c -> case c of
      W.Stack t [] (r:rs) ->  W.Stack t [r] rs
      otherwise           -> c
 
+pads = [
+    NS "mpd" "urxvtc -name mpd -e bash -c ncmpcpp" (resource =? "mpd")
+        (customFloating $ W.RationalRect (1/12) (1/12) (5/6) (5/6)),
+    NS "scr" "urxvtc -name scr -e bash" (resource =? "scr")
+        (customFloating $ W.RationalRect 0.5 0.5 0.4 0.4)
+    ]
+
 layout' = avoidStrutsOn [U] (full ||| tile) ||| full'
     where
         rt    = ResizableTall 1 (2/100) (1/2) []
@@ -74,7 +81,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ 
     ((modMask, xK_Return), safeSpawn (XMonad.terminal conf) []),
 
-    ((modMask, xK_o), scratchpadSpawnAction conf),
+    ((modMask, xK_o), namedScratchpadAction pads "scr"),
     ((modMask, xK_0), toggleOrView "NSP"),
 
     ((modMask .|. controlMask, xK_l), safeSpawn ("i3lock") ["-c","000000"]),
@@ -89,7 +96,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ((modMask, xK_u), safeSpawn ("dmnt") ["-n"]),
     ((modMask .|. shiftMask, xK_u), safeSpawn ("dmnt") ["-nu"]),
 
-    ((modMask, xK_m), safeSpawn ("dmpd") []),
+    ((modMask, xK_m), namedScratchpadAction pads "mpd"),
     ((modMask, xK_y), safeSpawn ("dtmx") []),
 
     ((modMask, xK_g), windowPromptGoto promptConfig),
@@ -183,7 +190,7 @@ main = do
   where
       uhook   = withUrgencyHookC NoUrgencyHook uconf
       uconf   = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
-      scratch = scratchpadManageHookDefault
+      scratch = namedScratchpadManageHook pads
 
 defaults = defaultConfig {
     -- simple stuff
