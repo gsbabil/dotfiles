@@ -9,7 +9,7 @@ URxvt*scrollBar: false
 URxvt.termName: rxvt-256color
 ! URxvt.shading: 10
 URxvt.depth: 32
-URxvt.background: [90]#121112
+URxvt.background: [95]#121112
 
 ! set up extensions
 URxvt.perl-ext: default,url-select,clipboard,keyboard-select

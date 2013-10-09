@@ -30,6 +30,14 @@ set visualbell
 set animations
 
 map S :sanitize!<CR>
+map gma :panorama add 
+map gmA :panorama add! 
+map gmg :panorama switch 
+map gmd :panorama rm 
+map gmD :panorama rm<CR>
+map gms :panorama stash 
+map gmS :panorama stash! 
+map gml :panorama list<CR> 
 
 command -nargs=0 yt :execute "!yt -q " + content.location.href + " &>/dev/null & "
 map <Leader>y :yt<CR>

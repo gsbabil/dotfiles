@@ -5,7 +5,7 @@ Config {
     position = Top,
     lowerOnStart = True,
     commands = [ 
-        Run Date "%a %m-%d %H:%M:%S " "date" 10,
+        Run Date "%a %m-%d %H:%M:%S [%s]" "date" 10,
         Run StdinReader
     ],
     template = " %StdinReader% }{ <fc=#D0CFD0>%date%</fc>"
