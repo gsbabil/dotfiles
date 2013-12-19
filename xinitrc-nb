@@ -40,6 +40,8 @@ mpd
 mpdcron
 urxvtd -q -f -o
 
+pmpds &>/dev/null &
+
 # monitor devices
 devmon --no-mount --exec-on-drive "devnotify %f %l" &> /tmp/devmon.log &
 
