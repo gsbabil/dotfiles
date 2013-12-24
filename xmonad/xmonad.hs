@@ -57,8 +57,8 @@ avoidMaster = W.modify' $ \c -> case c of
 pads = [
     NS "mpd" "urxvtc -name mpd -e bash -c ncmpcpp" (resource =? "mpd")
         (customFloating $ W.RationalRect (1/12) (1/12) (5/6) (5/6)),
-    NS "scr" "urxvtc -name scr -e bash" (resource =? "scr")
-        (customFloating $ W.RationalRect 0.5 0.5 0.4 0.4)
+    NS "scr" "urxvtc -name scr -e bash -c \"attach toolbox\"" (resource =? "scr")
+        (customFloating $ W.RationalRect 0.4 0.4 0.55 0.55)
     ]
 
 layout' = avoidStrutsOn [U] (full ||| tile) ||| full'

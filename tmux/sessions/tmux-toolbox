@@ -1,0 +1,12 @@
+#!/bin/bash
+
+tmux -q has-session -t toolbox
+
+if [[ $? -eq 1 ]]; then
+    tmux new-session -d -s toolbox
+
+    tmux set status-left '[#[fg=red]t#[default]]'
+    tmux set status-right ''
+    tmux set status off
+
+fi

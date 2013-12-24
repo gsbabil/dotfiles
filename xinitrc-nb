@@ -48,4 +48,6 @@ devmon --no-mount --exec-on-drive "devnotify %f %l" &> /tmp/devmon.log &
 # load cursor_name
 xsetroot -cursor_name left_ptr
 
+setmon
+
 exec xmonad

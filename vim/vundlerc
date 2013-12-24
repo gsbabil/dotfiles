@@ -19,6 +19,5 @@ Bundle 'godlygeek/tabular'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'dag/vim2hs'
 Bundle 'Shougo/neocomplete.vim'
-Bundle 'bitc/vim-hdevtools'
 
 filetype plugin indent on
