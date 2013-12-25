@@ -3,9 +3,7 @@
 tmux has-session -t rt
 
 if [[ $? -eq 1 ]]; then
-    tmux new-session -d -s rt
+    tmux new-session -d -s rt -n 'rtorrent' 'rtorrent'
 
-    tmux new-window -t rt:0 -k -n 'rtorrent' 'rtorrent'
-
-    tmux select-window -t rt:0
+    tmux select-window -t rt:1
 fi

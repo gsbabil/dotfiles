@@ -3,12 +3,11 @@
 tmux has-session -t hub
 
 if [[ $? -eq 1 ]]; then
-    tmux new-session -d -s hub
+    tmux new-session -d -s hub -n 'mutt' 'bash -ic mutt'
 
-    tmux new-window -t hub:0 -n 'mutt' 'bash -ic mutt'
-    tmux new-window -t hub:1 -n 'news' 'newsbeuter'
-    tmux new-window -t hub:2 -n 'ps' 'htop'
-    tmux new-window -t hub:3
+    tmux new-window -t hub -n 'news' 'newsbeuter'
+    tmux new-window -t hub -n 'ps' 'htop'
+    tmux new-window -t hub
 
-    tmux select-window -t hub:3
+    tmux select-window -t hub:4
 fi
