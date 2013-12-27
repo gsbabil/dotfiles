@@ -36,12 +36,6 @@ browser = /usr/bin/firefox -new-tab
 width = 1
 color = "#6C6C6C"
 
-[shortcuts]
-close = ctrl+mod1+space
-close_all = ctrl+mod1+a
-history = ctrl+mod1+h
-context = ctrl+mod1+period
-
 [urgency_low]
 background = "#121212"
 foreground = "#D0CFD0"
